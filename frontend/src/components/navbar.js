@@ -16,13 +16,13 @@ function Navbar() {
         {isOpen && (
           <ul style={styles.dropdownMenu}>
             <li style={styles.menuItem}>
-              <Link to="/landing" style={{ textDecoration: "none", color: "white" }}>Landing</Link>
+              <Link to="/landing" style={{ textDecoration: "none", color: "black" }}>Landing</Link>
             </li>
             <li style={styles.menuItem}>
-              <Link to="/comparison" style={{ textDecoration: "none", color: "white" }}>Comparison</Link>
+              <Link to="/comparison" style={{ textDecoration: "none", color: "black" }}>Comparison</Link>
             </li>
             <li style={styles.menuItem}>
-              <Link to="/timeline" style={{ textDecoration: "none", color: "white" }}>Timeline</Link>
+              <Link to="/timeline" style={{ textDecoration: "none", color: "black" }}>Timeline</Link>
             </li>
           </ul>
         )}
@@ -37,9 +37,11 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     padding: "10px 20px",
-    backgroundColor: "#333",
+    backgroundColor: "#3F241D",
     color: "#fff",
-    fontSize: "20px"
+    fontSize: "20px",
+    height: "60px",
+    borderRadius: "8px"
   },
   brand: {
     margin: 0,
@@ -49,23 +51,25 @@ const styles = {
     fontSize: "18px",
   },
   dropdownButton: {
-    backgroundColor: "#444",
-    color: "#fff",
+    backgroundColor: "#E2CCC0",
     border: "none",
-    padding: "10px 15px",
+    padding: "15px 20px",
     cursor: "pointer",
-    fontSize: "20px"
+    fontSize: "20px",
+    borderRadius: "8px",
+    height: "50px"
   },
   dropdownMenu: {
     position: "absolute",
     top: "100%",
     right: 0,
-    backgroundColor: "#444",
+    backgroundColor: "#E2CCC0",
     listStyle: "none",
+    color: "000",
     padding: 0,
     margin: 0,
     border: "1px solid #555",
-    color: "fff"
+    borderRadius: "4px",
   },
   menuItem: {
     padding: "10px 15px",
