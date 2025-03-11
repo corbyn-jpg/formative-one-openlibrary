@@ -1,31 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import openLibraryLogo from '../openlibrary-logo-tighter.svg';
+import "../App.css"; // Ensure the CSS file is imported
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDropdown = () => setIsOpen(!isOpen);
-
   return (
     <nav style={styles.navbar}>
-      <h1 style={styles.brand}>Open Library</h1>
-      <div style={styles.dropdown}>
-        <button onClick={toggleDropdown} style={styles.dropdownButton}>
-          Menu
-        </button>
-        {isOpen && (
-          <ul style={styles.dropdownMenu}>
-            <li style={styles.menuItem}>
-              <Link to="/landing" style={{ textDecoration: "none", color: "black" }}>Landing</Link>
-            </li>
-            <li style={styles.menuItem}>
-              <Link to="/comparison" style={{ textDecoration: "none", color: "black" }}>Comparison</Link>
-            </li>
-            <li style={styles.menuItem}>
-              <Link to="/timeline" style={{ textDecoration: "none", color: "black" }}>Timeline</Link>
-            </li>
-          </ul>
-        )}
+      {/* Logo on the left */}
+      <div style={styles.logoContainer}>
+        <img src={openLibraryLogo} alt="Open Library Logo" style={styles.logo} />
+      </div>
+
+      {/* Navigation links in the center */}
+      <div className="links" style={styles.navLinks}>
+        <Link to="/home" style={styles.link}>Home</Link>
+        <Link to="/comparison" style={styles.link}>Comparison</Link>
+        <Link to="/timeline" style={styles.link}>Timeline</Link>
+      </div>
+
+      {/* Search bar on the right */}
+      <div style={styles.searchContainer}>
+        <input type="text" placeholder="Search..." style={styles.searchInput} />
       </div>
     </nav>
   );
@@ -36,44 +31,44 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "10px 20px",
-    backgroundColor: "#3F241D",
+    padding: "10px 50px",
+    backgroundColor: "#4f2319",
     color: "#fff",
-    fontSize: "20px",
-    height: "60px",
+    fontSize: "28px",
+    height: "70px",
     borderRadius: "8px"
   },
-  brand: {
-    margin: 0,
+  logoContainer: {
+    flex: 0,
   },
-  dropdown: {
-    position: "relative",
+  logo: {
+    height: '50px',
+    width: 'auto',
+  },
+  navLinks: {
+    display: "flex",
+    flex: 6,
+    justifyContent: "center",
+    gap: "50px",
+  },
+  link: {
+    color: "#fff",
+    textDecoration: "none",
+    fontSize: "22px",
+  },
+  searchContainer: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  searchInput: {
+    padding: "10px",
     fontSize: "18px",
-  },
-  dropdownButton: {
-    backgroundColor: "#E2CCC0",
-    border: "none",
-    padding: "15px 20px",
-    cursor: "pointer",
-    fontSize: "20px",
-    borderRadius: "8px",
-    height: "50px"
-  },
-  dropdownMenu: {
-    position: "absolute",
-    top: "100%",
-    right: 0,
-    backgroundColor: "#E2CCC0",
-    listStyle: "none",
-    color: "000",
-    padding: 0,
-    margin: 0,
-    border: "1px solid #555",
+    border: "1px solid black",
     borderRadius: "4px",
-  },
-  menuItem: {
-    padding: "10px 15px",
-    cursor: "pointer",
+    outline: "none",
+    width: "200px",
+    fontFamily: "serif",
   },
 };
 
