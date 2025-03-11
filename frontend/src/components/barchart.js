@@ -91,7 +91,12 @@ const BarChart = () => {
   }, []);
 
   return (
-    <div style={{ width: '60%', height: '50vh', marginRight: 'auto', marginLeft: '5%', marginTop: '5%'}}>
+    <div style={{ 
+        backgroundColor: 'rgba(81, 53, 44, 0.8)', 
+        height: '55vh', 
+        marginRight: 'auto', 
+        marginLeft: '5%', 
+        marginTop: '5%'}}>
       <canvas ref={chartRef} id="book-genres" />
     </div>
   );
