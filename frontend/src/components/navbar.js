@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import openLibraryLogo from '../openlibrary-logo-tighter.svg';
+import openLibraryLogo from "../openlibrary-logo-tighter.svg";
 import "../App.css"; // Ensure the CSS file is imported
 
 function Navbar() {
@@ -8,14 +8,24 @@ function Navbar() {
     <nav style={styles.navbar}>
       {/* Logo on the left */}
       <div style={styles.logoContainer}>
-        <img src={openLibraryLogo} alt="Open Library Logo" style={styles.logo} />
+        <img
+          src={openLibraryLogo}
+          alt="Open Library Logo"
+          style={styles.logo}
+        />
       </div>
 
       {/* Navigation links in the center */}
       <div className="links" style={styles.navLinks}>
-        <Link to="/home" style={styles.link}>Home</Link>
-        <Link to="/comparison" style={styles.link}>Comparison</Link>
-        <Link to="/timeline" style={styles.link}>Timeline</Link>
+        <Link to="/home" style={styles.link}>
+          Home
+        </Link>
+        <Link to="/comparison" style={styles.link}>
+          Comparison
+        </Link>
+        <Link to="/timeline" style={styles.link}>
+          Timeline
+        </Link>
       </div>
 
       {/* Search bar on the right */}
@@ -36,14 +46,14 @@ const styles = {
     color: "#fff",
     fontSize: "28px",
     height: "70px",
-    borderRadius: "8px"
+    borderRadius: "8px",
   },
   logoContainer: {
     flex: 0,
   },
   logo: {
-    height: '50px',
-    width: 'auto',
+    height: "50px",
+    width: "auto",
   },
   navLinks: {
     display: "flex",

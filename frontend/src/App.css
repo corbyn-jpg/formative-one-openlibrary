@@ -3,33 +3,33 @@
   background-image: url("Background.png");
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 /* Hover effect for links */
 .links > a {
   color: #9ab;
-  padding: .75em;
+  padding: 0.75em;
   text-align: center;
   text-decoration: none; /* Remove default underline */
-  transition: all .5s;
-  position: relative; 
+  transition: all 0.5s;
+  position: relative;
 }
 
 /* Underline effect on hover */
 .links > a::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   width: 0; /* Start with no width */
-  height: 2px; 
-  background-color: #aaddff; 
+  height: 2px;
+  background-color: #aaddff;
   transition: width 0.5s; /* Smooth transition for the underline */
 }
 
 .links > a:hover::after {
-  width: 100%; 
+  width: 100%;
 }
 
 .hero-image {
@@ -52,4 +52,3 @@
   width: 35%;
   font-size: 1.25rem;
 }
-

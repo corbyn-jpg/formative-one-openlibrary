@@ -7,10 +7,11 @@ import Accordion from "./components/accordion";
 import Form from "./components/form";*/
 import "./App.css";
 import heroImage from "./Assets/Hero.jpeg";
+import BarChart from "./components/barchart";
 
 function Landing() {
   return (
-    <div
+    <><div
       className="hero-image"
       style={{
         backgroundImage: `linear-gradient(to right, #C19A84 40%, rgba(245, 230, 218, 0) 100%), url(${heroImage})`,
@@ -26,7 +27,9 @@ function Landing() {
           looking to dive deeper into the world of literature.
         </p>
       </div>
-    </div>
+    </div><BarChart /></>
+
+
   );
 }
 
