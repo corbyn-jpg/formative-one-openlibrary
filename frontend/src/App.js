@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Carousel from "./components/carousel";
-import "./App.css";
 import heroImage from "./Assets/Hero.jpeg";
 import BarChart from "./components/barchart";
 import LineChart from "./components/linechart";
 import StackedAreaChart from "./components/stackedarea";
 import Dropdown from "./components/dropdown";
+import Card from "./components/card";
+import "./App.css";
 
 const images = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg/428px-Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg",
@@ -15,6 +16,72 @@ const images = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Robin_Hobb_by_Gage_Skidmore.jpg/220px-Robin_Hobb_by_Gage_Skidmore.jpg",
 ];
 const title = ["Name"];
+
+const genres = ["Fantasy", "Science Fiction", "Mystery"];
+const authors = ["J.K. Rowling", "George R.R. Martin", "Brandon Sanderson"];
+
+const popularBooks = {
+  Fantasy: [
+    {
+      title: "Harry Potter and the Sorcerer's Stone",
+      author: "J.K. Rowling",
+      image: "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+      description: "The first book in the Harry Potter series.",
+    },
+    {
+      title: "The Hobbit",
+      author: "J.R.R. Tolkien",
+      image: "https://upload.wikimedia.org/wikipedia/en/4/4a/TheHobbit_FirstEdition.jpg",
+      description: "A fantasy novel about Bilbo Baggins' adventure.",
+    },
+    {
+      title: "A Game of Thrones",
+      author: "George R.R. Martin",
+      image: "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
+      description: "The first book in the A Song of Ice and Fire series.",
+    },
+  ],
+  "Science Fiction": [
+    {
+      title: "Dune",
+      author: "Frank Herbert",
+      image: "https://upload.wikimedia.org/wikipedia/en/d/de/Dune-Frank_Herbert_%281965%29_First_edition.jpg",
+      description: "A science fiction classic set in a distant future.",
+    },
+    {
+      title: "1984",
+      author: "George Orwell",
+      image: "https://upload.wikimedia.org/wikipedia/en/5/51/1984_first_edition_cover.jpg",
+      description: "A dystopian novel about totalitarianism.",
+    },
+    {
+      title: "The Martian",
+      author: "Andy Weir",
+      image: "https://upload.wikimedia.org/wikipedia/en/c/c3/The_Martian_2014.jpg",
+      description: "A story of an astronaut stranded on Mars.",
+    },
+  ],
+  Mystery: [
+    {
+      title: "The Girl with the Dragon Tattoo",
+      author: "Stieg Larsson",
+      image: "https://upload.wikimedia.org/wikipedia/en/4/4c/The_Girl_with_the_Dragon_Tattoo_Poster.jpg",
+      description: "A gripping mystery novel.",
+    },
+    {
+      title: "Gone Girl",
+      author: "Gillian Flynn",
+      image: "https://upload.wikimedia.org/wikipedia/en/3/3b/Gone_Girl.jpg",
+      description: "A psychological thriller about a missing wife.",
+    },
+    {
+      title: "The Da Vinci Code",
+      author: "Dan Brown",
+      image: "https://upload.wikimedia.org/wikipedia/en/6/6b/DaVinciCode.jpg",
+      description: "A fast-paced mystery involving art and religion.",
+    },
+  ],
+};
 
 // Data for the BarChart
 const barChartData = [
@@ -234,7 +301,61 @@ function Comparison() {
 }
 
 function Timeline() {
-  return <h1>third page</h1>;
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [books, setBooks] = useState([]);
+
+  const handleSelect = (option) => {
+    setSelectedOption(option);
+    setBooks(popularBooks[option] || []);
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        margin: "20px",
+      }}
+    >
+      <h1>Timeline: Most Popular Books</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "20px",
+        }}
+      >
+        <Dropdown
+          options={genres.concat(authors)} // Combine genres and authors
+          onSelect={handleSelect}
+          placeholder="Select a genre or author"
+        />
+      </div>
+
+      {selectedOption && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            margin: "20px",
+          }}
+        >
+          {books.map((book, index) => (
+            <Card
+              key={index}
+              title={book.title}
+              author={book.author}
+              image={book.image}
+              description={book.description}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
 
