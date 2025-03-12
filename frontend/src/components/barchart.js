@@ -47,7 +47,7 @@ const BarChart = () => {
             beginAtZero: true,
             ticks: {
               font: {
-                size: 16,
+                size: 20,
                 family: 'serif',
               },
               color: 'white',
@@ -56,7 +56,7 @@ const BarChart = () => {
           x: {
             ticks: {
               font: {
-                size: 16,
+                size: 20,
                 family: 'serif',
               },
               color: 'white',
@@ -70,7 +70,7 @@ const BarChart = () => {
           legend: {
             labels: {
               font: {
-                size: 20,
+                size: 24,
                 family: 'serif',
               },
               color: 'white',

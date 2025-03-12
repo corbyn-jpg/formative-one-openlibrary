@@ -9,6 +9,7 @@ import "./App.css";
 import heroImage from "./Assets/Hero.jpeg";
 import BarChart from "./components/barchart";
 import LineChart from "./components/linechart";
+import StackedAreaChart from "./components/stackedarea";
 
 const images = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg/428px-Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg",
@@ -55,8 +56,19 @@ function Landing() {
         </div>
       </div>
 
-      <div>
-        <LineChart />
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        margin: '20px 5%', 
+        gap: '20px' 
+      }}>
+        <div style={{ flex: 1 }}>
+          <LineChart />
+        </div>
+        <div style={{ flex: 1 }}>
+          <StackedAreaChart />
+        </div>
       </div>
     </>
   );
