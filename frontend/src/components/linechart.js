@@ -1,86 +1,112 @@
 import React, { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
 
-const LineChart = () => {
+const LineChart = ({ data, borderColors, backgroundColors, fontColor, chartTitle }) => {
   const chartRef = useRef(null);
+  const chartInstance = useRef(null); // Store the Chart.js instance
 
   useEffect(() => {
-    const ctx = chartRef.current.getContext("2d");
+    const ctx = chartRef.current?.getContext("2d");
 
-    const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    const fictionBooks = [5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400, 6600];
-    const nonFictionBooks = [
-      4500, 4700, 4900, 5100, 5300, 5500, 5700, 5900, 6100,
-    ];
+    // Destroy the previous chart instance if it exists
+    if (chartInstance.current) {
+      chartInstance.current.destroy();
+    }
 
-    const chart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: years,
-        datasets: [
-          {
-            label: "Fiction Books Published",
-            data: fictionBooks,
-            borderColor: "rgb(144, 160, 255)",
-            backgroundColor: "rgba(101, 57, 160, 0.2)",
+    // Only create a new chart if data is available
+    if (ctx && data && data.labels && data.datasets) {
+      chartInstance.current = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: data.labels,
+          datasets: data.datasets.map((dataset, index) => ({
+            label: dataset.label,
+            data: dataset.data,
+            borderColor: borderColors[index],
+            backgroundColor: backgroundColors[index],
             borderWidth: 2,
             fill: false,
-          },
-          {
-            label: "Non-Fiction Books Published",
-            data: nonFictionBooks,
-            borderColor: "rgb(228, 227, 145)",
-            backgroundColor: "rgba(255, 214, 102, 0.2)",
-            borderWidth: 2,
-            fill: false,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: "Trends in Book Publishing Over the Years",
-            font: {
-              size: 24,
-              family: "serif",
-            },
-            color: "white",
-          },
+          })),
         },
-        scales: {
-          x: {
+        options: {
+          responsive: true,
+          maintainAspectRatio: false, 
+          plugins: {
             title: {
               display: true,
-              text: "Year",
+              text: chartTitle,
               font: {
-                size: 20,
+                size: 24,
                 family: "serif",
               },
-              color: "white",
+              color: fontColor,
+            },
+            legend: {
+              labels: {
+                font: {
+                  size: 16,
+                  family: "serif",
+                },
+                color: fontColor,
+                usePointStyle: true, 
+              },
             },
           },
-          y: {
-            title: {
-              display: true,
-              text: "Number of Books Published",
-              font: {
-                size: 20,
-                family: "serif",
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Year",
+                font: {
+                  size: 20,
+                  family: "serif",
+                },
+                color: fontColor,
               },
-              color: "white",
+              ticks: {
+                color: fontColor,
+                font: {
+                  size: 16,
+                  family: "serif",
+                },
+              },
+              grid: {
+                color: "rgba(255, 255, 255, 0.1)",
+              },
             },
-            grid: {
-              color: "rgba(255, 255, 255, 0.1)",
+            y: {
+              title: {
+                display: true,
+                text: "Number of Books Published",
+                font: {
+                  size: 20,
+                  family: "serif",
+                },
+                color: fontColor,
+              },
+              ticks: {
+                color: fontColor,
+                font: {
+                  size: 16,
+                  family: "serif",
+                },
+              },
+              grid: {
+                color: "rgba(255, 255, 255, 0.1)",
+              },
             },
           },
         },
-      },
-    });
+      });
+    }
 
-    return () => chart.destroy(); // Cleanup on unmount
-  }, []);
+    // Cleanup function to destroy the chart when the component unmounts
+    return () => {
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
+    };
+  }, [data, borderColors, backgroundColors, fontColor, chartTitle]);
 
   return (
     <div
@@ -90,6 +116,7 @@ const LineChart = () => {
         marginRight: "auto",
         marginLeft: "5%",
         marginTop: "5%",
+        position: "relative", 
       }}
     >
       <canvas ref={chartRef} />

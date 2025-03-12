@@ -28,6 +28,21 @@ const barChartData = [
 ];
 
 function Landing() {
+  // Data for the LineChart
+  const lineChartData = {
+    labels: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    datasets: [
+      {
+        label: "Fiction Books Published",
+        data: [5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400, 6600],
+      },
+      {
+        label: "Non-Fiction Books Published",
+        data: [4500, 4700, 4900, 5100, 5300, 5500, 5700, 5900, 6100],
+      },
+    ],
+  };
+
   return (
     <>
       <div
@@ -81,7 +96,13 @@ function Landing() {
         }}
       >
         <div style={{ flex: 1 }}>
-          <LineChart />
+          <LineChart
+            data={lineChartData}
+            borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
+            backgroundColors={["rgba(101, 57, 160, 0.2)", "rgba(255, 214, 102, 0.2)"]}
+            fontColor="white"
+            chartTitle="Trends in Book Publishing Over the Years"
+          />
         </div>
         <div style={{ flex: 1 }}>
           <StackedAreaChart />
@@ -95,6 +116,10 @@ function Comparison() {
   const [firstSelection, setFirstSelection] = useState(null);
   const [secondSelection, setSecondSelection] = useState(null);
   const [comparisonData, setComparisonData] = useState([]);
+  const [lineChartData, setLineChartData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   const authors = ["J.K. Rowling", "George R.R. Martin", "Brandon Sanderson"];
   const books = ["Harry Potter", "A Game of Thrones", "Mistborn"];
@@ -106,17 +131,34 @@ function Comparison() {
       return;
     }
 
-    // Simulate comparison data based on selections
-    const data = [
+    // Simulate comparison data for the bar chart
+    const barData = [
       { label: firstSelection, value: Math.random() * 100 },
       { label: secondSelection, value: Math.random() * 100 },
     ];
+    setComparisonData(barData);
 
-    setComparisonData(data);
+    // Simulate comparison data for the line chart
+    const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    const lineData = {
+      labels: years,
+      datasets: [
+        {
+          label: firstSelection,
+          data: years.map(() => Math.random() * 100),
+        },
+        {
+          label: secondSelection,
+          data: years.map(() => Math.random() * 100),
+        },
+      ],
+    };
+    setLineChartData(lineData);
   };
 
-  // Dynamic chart title based on selections
-  const chartTitle = `Comparison: ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
+  // Dynamic chart titles based on selections
+  const barChartTitle = `Comparison: ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
+  const lineChartTitle = `Trends: ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
 
   return (
     <div
@@ -150,12 +192,13 @@ function Comparison() {
           onClick={handleSubmit}
           style={{
             padding: "10px 20px",
-            backgroundColor: "#2196F3",
+            backgroundColor: "#4bc089",
             color: "white",
+            fontFamily: "serif",
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
-            fontSize: "16px",
+            fontSize: "20px",
             marginLeft: "10px",
           }}
         >
@@ -164,13 +207,25 @@ function Comparison() {
       </div>
 
       {comparisonData.length > 0 && (
-        <div style={{ width: "50%", margin: "20px" }}>
+        <div style={{ width: "80%", margin: "20px" }}>
           <BarChart
             data={comparisonData}
             backgroundColor="rgba(35, 79, 146, 0.8)"
             borderColor="rgb(144, 160, 255)"
             fontColor="white"
-            chartTitle={chartTitle} // Dynamic chart title
+            chartTitle={barChartTitle}
+          />
+        </div>
+      )}
+
+      {lineChartData.labels.length > 0 && (
+        <div style={{ width: "80%", margin: "20px" }}>
+          <LineChart
+            data={lineChartData}
+            borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
+            backgroundColors={["rgba(101, 57, 160, 0.2)", "rgba(255, 214, 102, 0.2)"]}
+            fontColor="white"
+            chartTitle={lineChartTitle}
           />
         </div>
       )}
