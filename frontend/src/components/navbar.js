@@ -15,7 +15,6 @@ function Navbar() {
         />
       </div>
 
-      {/* Navigation links in the center */}
       <div className="links" style={styles.navLinks}>
         <Link to="/home" style={styles.link}>
           Home
@@ -28,7 +27,6 @@ function Navbar() {
         </Link>
       </div>
 
-      {/* Search bar on the right */}
       <div style={styles.searchContainer}>
         <input type="text" placeholder="Search..." style={styles.searchInput} />
       </div>

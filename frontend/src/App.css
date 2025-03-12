@@ -6,6 +6,10 @@
   font-family: "Times New Roman", Times, serif;
 }
 
+h1{
+  color: white;
+}
+
 /* Hover effect for links */
 .links > a {
   color: #9ab;

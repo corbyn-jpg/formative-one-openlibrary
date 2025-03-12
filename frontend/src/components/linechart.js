@@ -22,7 +22,7 @@ const LineChart = () => {
             label: "Fiction Books Published",
             data: fictionBooks,
             borderColor: "rgb(144, 160, 255)",
-            backgroundColor: "rgba(35, 79, 146, 0.2)",
+            backgroundColor: "rgba(101, 57, 160, 0.2)",
             borderWidth: 2,
             fill: false,
           },

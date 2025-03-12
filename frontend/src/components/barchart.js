@@ -1,21 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarChart = () => {
+const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null); // Store the Chart.js instance
 
   useEffect(() => {
-    const data = [
-      { genre: "Fiction", count: 120 },
-      { genre: "Non-Fiction", count: 85 },
-      { genre: "Science Fiction", count: 60 },
-      { genre: "Mystery", count: 90 },
-      { genre: "Fantasy", count: 75 },
-      { genre: "Romance", count: 110 },
-      { genre: "Thriller", count: 95 },
-    ];
-
     const ctx = chartRef.current.getContext("2d");
 
     // Destroy the previous chart instance if it exists
@@ -27,13 +17,13 @@ const BarChart = () => {
     chartInstance.current = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: data.map((row) => row.genre),
+        labels: data.map((row) => row.label), 
         datasets: [
           {
-            label: "Number of Books by Genre",
-            data: data.map((row) => row.count),
-            backgroundColor: "rgba(35, 79, 146, 0.8)",
-            borderColor: "rgb(144, 160, 255)",
+            label: chartTitle,
+            data: data.map((row) => row.value), 
+            backgroundColor: backgroundColor,
+            borderColor: borderColor,
             borderWidth: 1,
             barThickness: "flex",
           },
@@ -50,7 +40,7 @@ const BarChart = () => {
                 size: 20,
                 family: "serif",
               },
-              color: "white",
+              color: fontColor,
             },
           },
           x: {
@@ -59,7 +49,7 @@ const BarChart = () => {
                 size: 20,
                 family: "serif",
               },
-              color: "white",
+              color: fontColor,
             },
             grid: {
               display: false,
@@ -73,7 +63,7 @@ const BarChart = () => {
                 size: 24,
                 family: "serif",
               },
-              color: "white",
+              color: fontColor,
             },
           },
         },
@@ -88,7 +78,7 @@ const BarChart = () => {
         chartInstance.current.destroy();
       }
     };
-  }, []);
+  }, [data, backgroundColor, borderColor, fontColor, chartTitle]);
 
   return (
     <div
@@ -100,7 +90,7 @@ const BarChart = () => {
         marginTop: "5%",
       }}
     >
-      <canvas ref={chartRef} id="book-genres" />
+      <canvas ref={chartRef} />
     </div>
   );
 };

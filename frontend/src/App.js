@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Carousel from "./components/carousel";
-/*import Card from "./components/card";
-import Accordion from "./components/accordion";
-import Form from "./components/form";*/
 import "./App.css";
 import heroImage from "./Assets/Hero.jpeg";
 import BarChart from "./components/barchart";
 import LineChart from "./components/linechart";
 import StackedAreaChart from "./components/stackedarea";
+import Dropdown from "./components/dropdown";
 
 const images = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg/428px-Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg",
@@ -17,6 +15,17 @@ const images = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Robin_Hobb_by_Gage_Skidmore.jpg/220px-Robin_Hobb_by_Gage_Skidmore.jpg",
 ];
 const title = ["Name"];
+
+// Data for the BarChart
+const barChartData = [
+  { label: "Fiction", value: 120 },
+  { label: "Non-Fiction", value: 85 },
+  { label: "Science Fiction", value: 60 },
+  { label: "Mystery", value: 90 },
+  { label: "Fantasy", value: 75 },
+  { label: "Romance", value: 110 },
+  { label: "Thriller", value: 95 },
+];
 
 function Landing() {
   return (
@@ -49,7 +58,13 @@ function Landing() {
         }}
       >
         <div style={{ flex: 2 }}>
-          <BarChart />
+          <BarChart
+            data={barChartData}
+            backgroundColor="rgba(35, 79, 146, 0.8)"
+            borderColor="rgb(144, 160, 255)"
+            fontColor="white"
+            chartTitle="Number of Books by Genre"
+          />
         </div>
         <div style={{ flex: 1 }}>
           <Carousel images={images} title={title} />
@@ -77,12 +92,96 @@ function Landing() {
 }
 
 function Comparison() {
-  return <h1>second page</h1>;
+  const [firstSelection, setFirstSelection] = useState(null);
+  const [secondSelection, setSecondSelection] = useState(null);
+  const [comparisonData, setComparisonData] = useState([]);
+
+  const authors = ["J.K. Rowling", "George R.R. Martin", "Brandon Sanderson"];
+  const books = ["Harry Potter", "A Game of Thrones", "Mistborn"];
+  const genres = ["Fiction", "Non-Fiction", "Science Fiction", "Fantasy", "Mystery"];
+
+  const handleSubmit = () => {
+    if (!firstSelection || !secondSelection) {
+      alert("Please select both options to compare.");
+      return;
+    }
+
+    // Simulate comparison data based on selections
+    const data = [
+      { label: firstSelection, value: Math.random() * 100 },
+      { label: secondSelection, value: Math.random() * 100 },
+    ];
+
+    setComparisonData(data);
+  };
+
+  // Dynamic chart title based on selections
+  const chartTitle = `Comparison: ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        margin: "20px",
+      }}
+    >
+      <h1>Compare Authors, Books, or Genres</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "20px",
+        }}
+      >
+        <Dropdown
+          options={authors.concat(books).concat(genres)}
+          onSelect={setFirstSelection}
+          placeholder="Select first option"
+        />
+        <Dropdown
+          options={authors.concat(books).concat(genres)}
+          onSelect={setSecondSelection}
+          placeholder="Select second option"
+        />
+        <button
+          onClick={handleSubmit}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#2196F3",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontSize: "16px",
+            marginLeft: "10px",
+          }}
+        >
+          Compare
+        </button>
+      </div>
+
+      {comparisonData.length > 0 && (
+        <div style={{ width: "50%", margin: "20px" }}>
+          <BarChart
+            data={comparisonData}
+            backgroundColor="rgba(35, 79, 146, 0.8)"
+            borderColor="rgb(144, 160, 255)"
+            fontColor="white"
+            chartTitle={chartTitle} // Dynamic chart title
+          />
+        </div>
+      )}
+    </div>
+  );
 }
 
 function Timeline() {
   return <h1>third page</h1>;
 }
+
 
 function App() {
   return (

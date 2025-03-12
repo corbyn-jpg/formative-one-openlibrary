@@ -21,29 +21,29 @@ const StackedAreaChart = () => {
           {
             label: "Fiction",
             data: fiction,
-            borderColor: "#FF6384", // Red
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "#90a0ff",
+            backgroundColor: "rgba(101, 57, 160, 0.5)",
             fill: true,
           },
           {
             label: "Non-Fiction",
             data: nonFiction,
-            borderColor: "#36A2EB", // Blue
-            backgroundColor: "rgba(54, 162, 235, 0.5)",
+            borderColor: "#90a0ff",
+            backgroundColor: "rgba(35, 79, 146, 0.5)",
             fill: true,
           },
           {
             label: "Science Fiction",
             data: sciFi,
-            borderColor: "#4BC0C0",
-            backgroundColor: "rgba(75, 192, 192, 0.5)",
+            borderColor: "#3e996e",
+            backgroundColor: "rgba(75, 192, 137, 0.5)",
             fill: true,
           },
           {
             label: "Mystery",
             data: mystery,
-            borderColor: "#FFCE56",
-            backgroundColor: "rgba(255, 206, 86, 0.5)",
+            borderColor: "#e4e391",
+            backgroundColor: "rgba(255, 214, 102, 0.5)",
             fill: true,
           },
         ],
