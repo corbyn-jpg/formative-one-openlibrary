@@ -21,6 +21,7 @@ const genres = ["Fantasy", "Science Fiction", "Mystery"];
 const authors = ["J.K. Rowling", "George R.R. Martin", "Brandon Sanderson"];
 
 const popularBooks = {
+  // Existing genre data
   Fantasy: [
     {
       title: "Harry Potter and the Sorcerer's Stone",
@@ -79,6 +80,68 @@ const popularBooks = {
       author: "Dan Brown",
       image: "https://upload.wikimedia.org/wikipedia/en/6/6b/DaVinciCode.jpg",
       description: "A fast-paced mystery involving art and religion.",
+    },
+  ],
+
+  // Simulated data for authors
+  "J.K. Rowling": [
+    {
+      title: "Harry Potter and the Sorcerer's Stone",
+      author: "J.K. Rowling",
+      image: "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+      description: "The first book in the Harry Potter series.",
+    },
+    {
+      title: "Harry Potter and the Chamber of Secrets",
+      author: "J.K. Rowling",
+      image: "https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg",
+      description: "The second book in the Harry Potter series.",
+    },
+    {
+      title: "Harry Potter and the Prisoner of Azkaban",
+      author: "J.K. Rowling",
+      image: "https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg",
+      description: "The third book in the Harry Potter series.",
+    },
+  ],
+  "George R.R. Martin": [
+    {
+      title: "A Game of Thrones",
+      author: "George R.R. Martin",
+      image: "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
+      description: "The first book in the A Song of Ice and Fire series.",
+    },
+    {
+      title: "A Clash of Kings",
+      author: "George R.R. Martin",
+      image: "https://upload.wikimedia.org/wikipedia/en/2/2c/AClashOfKings.jpg",
+      description: "The second book in the A Song of Ice and Fire series.",
+    },
+    {
+      title: "A Storm of Swords",
+      author: "George R.R. Martin",
+      image: "https://upload.wikimedia.org/wikipedia/en/1/1c/ASOS.jpg",
+      description: "The third book in the A Song of Ice and Fire series.",
+    },
+  ],
+  "Brandon Sanderson": [
+    {
+      title: "Mistborn: The Final Empire",
+      author: "Brandon Sanderson",
+      image: "https://upload.wikimedia.org/wikipedia/en/4/4e/Mistborn_cover.jpg",
+      description: "The first book in the Mistborn series.",
+    },
+    {
+      title: "The Way of Kings",
+      author: "Brandon Sanderson",
+      image: "https://upload.wikimedia.org/wikipedia/en/8/8b/TheWayOfKings.png",
+      description: "The first book in The Stormlight Archive series.",
+    },
+    {
+      title: "Words of Radiance",
+      author: "Brandon Sanderson",
+      image: "https://upload.wikimedia.org/wikipedia/en/8/8f/Words_of_Radiance_US_Hardback_Cover_2014.jpg",
+      description: "The second book in The Stormlight Archive series.",
     },
   ],
 };
