@@ -14,7 +14,7 @@ const Carousel = ({ images, title }) => {
   };
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div style={{ textAlign: "center" }}>
       <div style={styles.carousel}>
         <button onClick={prevSlide} style={styles.button}>
           &lt;
@@ -40,7 +40,7 @@ const styles = {
     height: "45vh",
     margin: "0 15px",
     borderRadius: "8px",
-    border: "1px solid #ddd"
+    border: "1px solid #ddd",
   },
   button: {
     backgroundColor: "#4f2319",
@@ -50,11 +50,11 @@ const styles = {
     padding: "10px 15px",
     cursor: "pointer",
     width: "50px",
-    height: "50px"
+    height: "50px",
   },
   title: {
-    color: "white"
-  }
+    color: "white",
+  },
 };
 
 export default Carousel;

@@ -16,9 +16,7 @@ const images = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/J._R._R._Tolkien%2C_ca._1925.jpg/220px-J._R._R._Tolkien%2C_ca._1925.jpg",
   "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Robin_Hobb_by_Gage_Skidmore.jpg/220px-Robin_Hobb_by_Gage_Skidmore.jpg",
 ];
-const title = [
-  "Name"
-]
+const title = ["Name"];
 
 function Landing() {
   return (
@@ -33,36 +31,40 @@ function Landing() {
           <h1>Open Library Explorer</h1>
           <p>
             Open Library Explorer helps users compare books, authors, and genres
-            using data from the Open Library API. Easily analyze trends, view top
-            books, and explore literary timelines through interactive charts and
-            visualizations. Perfect for readers, researchers, and book enthusiasts
-            looking to dive deeper into the world of literature.
+            using data from the Open Library API. Easily analyze trends, view
+            top books, and explore literary timelines through interactive charts
+            and visualizations. Perfect for readers, researchers, and book
+            enthusiasts looking to dive deeper into the world of literature.
           </p>
         </div>
       </div>
 
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        margin: '20px 5%', 
-        gap: '20px' 
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "20px 5%",
+          gap: "20px",
+        }}
+      >
         <div style={{ flex: 2 }}>
           <BarChart />
         </div>
         <div style={{ flex: 1 }}>
-          <Carousel images={images} title = {title}/>
+          <Carousel images={images} title={title} />
         </div>
       </div>
 
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        margin: '20px 5%', 
-        gap: '20px' 
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "20px 5%",
+          gap: "20px",
+        }}
+      >
         <div style={{ flex: 1 }}>
           <LineChart />
         </div>
@@ -95,6 +97,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
+          <Route index element={<Landing />} />
           <Route path="/home" element={<Landing />} />
           <Route path="/comparison" element={<Comparison />} />
           <Route path="/timeline" element={<Timeline />} />

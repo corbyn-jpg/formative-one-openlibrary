@@ -22,28 +22,28 @@ const StackedAreaChart = () => {
             label: "Fiction",
             data: fiction,
             borderColor: "#FF6384", // Red
-            backgroundColor: "rgba(255, 99, 132, 0.5)", 
-            fill: true, 
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            fill: true,
           },
           {
             label: "Non-Fiction",
             data: nonFiction,
             borderColor: "#36A2EB", // Blue
-            backgroundColor: "rgba(54, 162, 235, 0.5)", 
-            fill: true, 
+            backgroundColor: "rgba(54, 162, 235, 0.5)",
+            fill: true,
           },
           {
             label: "Science Fiction",
             data: sciFi,
-            borderColor: "#4BC0C0", 
-            backgroundColor: "rgba(75, 192, 192, 0.5)", 
-            fill: true, 
+            borderColor: "#4BC0C0",
+            backgroundColor: "rgba(75, 192, 192, 0.5)",
+            fill: true,
           },
           {
             label: "Mystery",
             data: mystery,
-            borderColor: "#FFCE56", 
-            backgroundColor: "rgba(255, 206, 86, 0.5)", 
+            borderColor: "#FFCE56",
+            backgroundColor: "rgba(255, 206, 86, 0.5)",
             fill: true,
           },
         ],
@@ -56,7 +56,7 @@ const StackedAreaChart = () => {
             text: "Books Published by Genre Over Time",
             font: {
               size: 24,
-              family: 'serif'
+              family: "serif",
             },
             color: "white",
           },
@@ -64,7 +64,7 @@ const StackedAreaChart = () => {
             labels: {
               font: {
                 size: 16,
-                family: 'serif'
+                family: "serif",
               },
               color: "white",
             },
@@ -77,7 +77,7 @@ const StackedAreaChart = () => {
               text: "Year",
               font: {
                 size: 20,
-                family: 'serif'
+                family: "serif",
               },
               color: "white",
             },
@@ -85,7 +85,7 @@ const StackedAreaChart = () => {
               color: "white",
               font: {
                 size: 16,
-                family: 'serif'
+                family: "serif",
               },
             },
             grid: {
@@ -93,13 +93,13 @@ const StackedAreaChart = () => {
             },
           },
           y: {
-            stacked: true, 
+            stacked: true,
             title: {
               display: true,
               text: "Number of Books Published",
               font: {
                 size: 20,
-                family: 'serif'
+                family: "serif",
               },
               color: "white",
             },
@@ -107,7 +107,7 @@ const StackedAreaChart = () => {
               color: "white",
               font: {
                 size: 16,
-                family: 'serif'
+                family: "serif",
               },
             },
             grid: {
@@ -124,8 +124,8 @@ const StackedAreaChart = () => {
   return (
     <div
       style={{
-        backgroundColor: 'rgba(81, 53, 44, 0.8)', 
-        height: '55vh', 
+        backgroundColor: "rgba(81, 53, 44, 0.8)",
+        height: "55vh",
       }}
     >
       <canvas ref={chartRef} />

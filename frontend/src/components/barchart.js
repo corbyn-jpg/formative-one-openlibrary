@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import React, { useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
 
 const BarChart = () => {
   const chartRef = useRef(null);
@@ -7,16 +7,16 @@ const BarChart = () => {
 
   useEffect(() => {
     const data = [
-      { genre: 'Fiction', count: 120 },
-      { genre: 'Non-Fiction', count: 85 },
-      { genre: 'Science Fiction', count: 60 },
-      { genre: 'Mystery', count: 90 },
-      { genre: 'Fantasy', count: 75 },
-      { genre: 'Romance', count: 110 },
-      { genre: 'Thriller', count: 95 },
+      { genre: "Fiction", count: 120 },
+      { genre: "Non-Fiction", count: 85 },
+      { genre: "Science Fiction", count: 60 },
+      { genre: "Mystery", count: 90 },
+      { genre: "Fantasy", count: 75 },
+      { genre: "Romance", count: 110 },
+      { genre: "Thriller", count: 95 },
     ];
 
-    const ctx = chartRef.current.getContext('2d');
+    const ctx = chartRef.current.getContext("2d");
 
     // Destroy the previous chart instance if it exists
     if (chartInstance.current) {
@@ -25,41 +25,41 @@ const BarChart = () => {
 
     // Create a new Chart.js instance and store it in the ref
     chartInstance.current = new Chart(ctx, {
-      type: 'bar',
+      type: "bar",
       data: {
-        labels: data.map(row => row.genre),
+        labels: data.map((row) => row.genre),
         datasets: [
           {
-            label: 'Number of Books by Genre',
-            data: data.map(row => row.count),
-            backgroundColor: 'rgba(35, 79, 146, 0.8)', 
-            borderColor: 'rgb(144, 160, 255)',
-            borderWidth: 1, 
-            barThickness: 'flex',
+            label: "Number of Books by Genre",
+            data: data.map((row) => row.count),
+            backgroundColor: "rgba(35, 79, 146, 0.8)",
+            borderColor: "rgb(144, 160, 255)",
+            borderWidth: 1,
+            barThickness: "flex",
           },
         ],
       },
       options: {
-        responsive: true, 
-        maintainAspectRatio: false, 
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true,
             ticks: {
               font: {
                 size: 20,
-                family: 'serif',
+                family: "serif",
               },
-              color: 'white',
+              color: "white",
             },
           },
           x: {
             ticks: {
               font: {
                 size: 20,
-                family: 'serif',
+                family: "serif",
               },
-              color: 'white',
+              color: "white",
             },
             grid: {
               display: false,
@@ -71,9 +71,9 @@ const BarChart = () => {
             labels: {
               font: {
                 size: 24,
-                family: 'serif',
+                family: "serif",
               },
-              color: 'white',
+              color: "white",
             },
           },
         },
@@ -91,12 +91,15 @@ const BarChart = () => {
   }, []);
 
   return (
-    <div style={{ 
-        backgroundColor: 'rgba(81, 53, 44, 0.8)', 
-        height: '55vh', 
-        marginRight: 'auto', 
-        marginLeft: '5%', 
-        marginTop: '5%'}}>
+    <div
+      style={{
+        backgroundColor: "rgba(81, 53, 44, 0.8)",
+        height: "55vh",
+        marginRight: "auto",
+        marginLeft: "5%",
+        marginTop: "5%",
+      }}
+    >
       <canvas ref={chartRef} id="book-genres" />
     </div>
   );

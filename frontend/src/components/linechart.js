@@ -9,7 +9,9 @@ const LineChart = () => {
 
     const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     const fictionBooks = [5000, 5200, 5400, 5600, 5800, 6000, 6200, 6400, 6600];
-    const nonFictionBooks = [4500, 4700, 4900, 5100, 5300, 5500, 5700, 5900, 6100];
+    const nonFictionBooks = [
+      4500, 4700, 4900, 5100, 5300, 5500, 5700, 5900, 6100,
+    ];
 
     const chart = new Chart(ctx, {
       type: "line",
@@ -41,8 +43,8 @@ const LineChart = () => {
             display: true,
             text: "Trends in Book Publishing Over the Years",
             font: {
-                size: 24,
-                family: 'serif'
+              size: 24,
+              family: "serif",
             },
             color: "white",
           },
@@ -54,9 +56,9 @@ const LineChart = () => {
               text: "Year",
               font: {
                 size: 20,
-                family: 'serif'
-            },
-            color: "white",
+                family: "serif",
+              },
+              color: "white",
             },
           },
           y: {
@@ -65,9 +67,9 @@ const LineChart = () => {
               text: "Number of Books Published",
               font: {
                 size: 20,
-                family: 'serif'
-            },
-            color: "white",
+                family: "serif",
+              },
+              color: "white",
             },
             grid: {
               color: "rgba(255, 255, 255, 0.1)",
@@ -80,14 +82,19 @@ const LineChart = () => {
     return () => chart.destroy(); // Cleanup on unmount
   }, []);
 
-  return <div style={{ 
-        backgroundColor: 'rgba(81, 53, 44, 0.8)', 
-        height: '55vh', 
-        marginRight: 'auto', 
-        marginLeft: '5%', 
-        marginTop: '5%'}}>
-      <canvas ref={chartRef}/>
+  return (
+    <div
+      style={{
+        backgroundColor: "rgba(81, 53, 44, 0.8)",
+        height: "55vh",
+        marginRight: "auto",
+        marginLeft: "5%",
+        marginTop: "5%",
+      }}
+    >
+      <canvas ref={chartRef} />
     </div>
+  );
 };
 
 export default LineChart;
