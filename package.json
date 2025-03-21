@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@cubejs-client/core": "^0.31.0",
+    "axios": "^1.8.4",
     "chart.js": "^4.4.8",
     "react-dropdown": "^1.11.0"
   }

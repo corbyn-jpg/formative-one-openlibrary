@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
+import axios from "axios";
 
 const LineChart = ({ data, borderColors, backgroundColors, fontColor, chartTitle }) => {
   const chartRef = useRef(null);

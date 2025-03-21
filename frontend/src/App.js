@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Carousel from "./components/carousel";
@@ -8,6 +8,7 @@ import LineChart from "./components/linechart";
 import StackedAreaChart from "./components/stackedarea";
 import Dropdown from "./components/dropdown";
 import Card from "./components/card";
+import axios from "axios";
 import "./App.css";
 
 const images = [

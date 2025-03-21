@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import axios from "axios";
 
 const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle }) => {
   const chartRef = useRef(null);
