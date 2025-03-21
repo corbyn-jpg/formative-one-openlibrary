@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import axios from "axios";
 
 const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle }) => {
   const chartRef = useRef(null);
-  const chartInstance = useRef(null); // Store the Chart.js instance
+  const chartInstance = useRef(null);
 
   useEffect(() => {
     const ctx = chartRef.current.getContext("2d");
@@ -14,19 +13,18 @@ const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle })
       chartInstance.current.destroy();
     }
 
-    // Create a new Chart.js instance and store it in the ref
+    // Create a new Chart.js instance
     chartInstance.current = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: data.map((row) => row.label), 
+        labels: data.map((row) => row.label), // X-axis labels
         datasets: [
           {
             label: chartTitle,
-            data: data.map((row) => row.value), 
+            data: data.map((row) => row.value), // Y-axis values
             backgroundColor: backgroundColor,
             borderColor: borderColor,
             borderWidth: 1,
-            barThickness: "flex",
           },
         ],
       },
@@ -36,21 +34,48 @@ const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle })
         scales: {
           y: {
             beginAtZero: true,
-            ticks: {
+            title: {
+              display: true,
+              text: "Number of Works",
               font: {
-                size: 20,
+                size: 16,
                 family: "serif",
               },
               color: fontColor,
             },
+            ticks: {
+              color: fontColor,
+              font: {
+                size: 14,
+                family: "serif",
+              },
+              callback: (value) => {
+                // Ensure the y-axis ticks are whole numbers
+                if (Number.isInteger(value)) {
+                  return value;
+                }
+              },
+            },
+            grid: {
+              color: "rgba(255, 255, 255, 0.1)",
+            },
           },
           x: {
-            ticks: {
+            title: {
+              display: true,
+              text: "Selection",
               font: {
-                size: 20,
+                size: 16,
                 family: "serif",
               },
               color: fontColor,
+            },
+            ticks: {
+              color: fontColor,
+              font: {
+                size: 14,
+                family: "serif",
+              },
             },
             grid: {
               display: false,
@@ -58,18 +83,19 @@ const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle })
           },
         },
         plugins: {
-          legend: {
-            labels: {
-              font: {
-                size: 24,
-                family: "serif",
-              },
-              color: fontColor,
+          title: {
+            display: true,
+            text: chartTitle,
+            font: {
+              size: 18,
+              family: "serif",
             },
+            color: fontColor,
+          },
+          legend: {
+            display: false,
           },
         },
-        barPercentage: 1.0,
-        categoryPercentage: 1.0,
       },
     });
 
@@ -86,9 +112,9 @@ const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle })
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
         height: "55vh",
-        marginRight: "auto",
-        marginLeft: "5%",
-        marginTop: "5%",
+        margin: "20px",
+        padding: "10px",
+        borderRadius: "8px",
       }}
     >
       <canvas ref={chartRef} />

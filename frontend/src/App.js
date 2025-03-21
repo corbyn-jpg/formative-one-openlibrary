@@ -243,7 +243,7 @@ function Landing() {
   );
 }
 
-function Comparison() {
+const Comparison = () => {
   const [firstSelection, setFirstSelection] = useState(null);
   const [secondSelection, setSecondSelection] = useState(null);
   const [comparisonData, setComparisonData] = useState([]);
@@ -251,45 +251,151 @@ function Comparison() {
     labels: [],
     datasets: [],
   });
+  const [authors, setAuthors] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [genres, setGenres] = useState([]);
 
-  const authors = ["J.K. Rowling", "George R.R. Martin", "Brandon Sanderson"];
-  const books = ["Harry Potter", "A Game of Thrones", "Mistborn"];
-  const genres = ["Fiction", "Non-Fiction", "Science Fiction", "Fantasy", "Mystery"];
+  // Fetch random authors, books, and genres on component mount
+  useEffect(() => {
+    const fetchRandomData = async () => {
+      try {
+        // Fetch random authors
+        const authorsResponse = await axios.get(
+          "https://openlibrary.org/search.json?q=author&limit=3"
+        );
+        const randomAuthors = authorsResponse.data.docs.map(
+          (doc) => doc.author_name[0]
+        );
+        setAuthors(randomAuthors);
 
-  const handleSubmit = () => {
+        // Fetch random books
+        const booksResponse = await axios.get(
+          "https://openlibrary.org/search.json?q=title&limit=3"
+        );
+        const randomBooks = booksResponse.data.docs.map((doc) => doc.title);
+        setBooks(randomBooks);
+
+        // Use a predefined list of genres
+        const predefinedGenres = [
+          "Fiction",
+          "Non-Fiction",
+          "Science Fiction",
+          "Fantasy",
+          "Mystery",
+        ];
+        setGenres(predefinedGenres.slice(0, 3)); // Select first 3 genres
+      } catch (error) {
+        console.error("Error fetching random data:", error);
+      }
+    };
+
+    fetchRandomData();
+  }, []);
+
+  // Fetch data from the Open Library API
+  const fetchData = async (query, type) => {
+    let url = "";
+    if (type === "author") {
+      url = `https://openlibrary.org/search.json?author=${encodeURIComponent(query)}`;
+    } else if (type === "title") {
+      url = `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`;
+    } else if (type === "subject") {
+      url = `https://openlibrary.org/subjects/${query.toLowerCase()}.json`;
+    }
+
+    try {
+      const response = await axios.get(url);
+      return response.data.numFound || 0; // Return the number of works found
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return 0;
+    }
+  };
+
+  // Fetch historical data for the line chart
+  const fetchHistoricalData = async (query, type) => {
+    const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    const data = await Promise.all(
+      years.map(async (year) => {
+        let url = "";
+        if (type === "author") {
+          url = `https://openlibrary.org/search.json?author=${encodeURIComponent(query)}&published_in=${year}`;
+        } else if (type === "title") {
+          url = `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}&published_in=${year}`;
+        } else if (type === "subject") {
+          url = `https://openlibrary.org/subjects/${query.toLowerCase()}.json?published_in=${year}`;
+        }
+
+        try {
+          const response = await axios.get(url);
+          return response.data.numFound || 0;
+        } catch (error) {
+          console.error("Error fetching historical data:", error);
+          return 0;
+        }
+      })
+    );
+    return data;
+  };
+
+  const handleSubmit = async () => {
     if (!firstSelection || !secondSelection) {
       alert("Please select both options to compare.");
       return;
     }
 
-    // Simulate comparison data for the bar chart
-    const barData = [
-      { label: firstSelection, value: Math.random() * 100 },
-      { label: secondSelection, value: Math.random() * 100 },
-    ];
-    setComparisonData(barData);
+    // Determine the type of selection (author, title, or subject)
+    const firstType = authors.includes(firstSelection)
+      ? "author"
+      : books.includes(firstSelection)
+      ? "title"
+      : "subject";
+    const secondType = authors.includes(secondSelection)
+      ? "author"
+      : books.includes(secondSelection)
+      ? "title"
+      : "subject";
 
-    // Simulate comparison data for the line chart
+    // Fetch data for both selections
+    const firstData = await fetchData(firstSelection, firstType);
+    const secondData = await fetchData(secondSelection, secondType);
+
+    // Fetch historical data for the line chart
+    const firstHistoricalData = await fetchHistoricalData(firstSelection, firstType);
+    const secondHistoricalData = await fetchHistoricalData(secondSelection, secondType);
+
+    // Update comparison data for the bar chart
+    setComparisonData([
+      { label: firstSelection, value: firstData },
+      { label: secondSelection, value: secondData },
+    ]);
+
+    // Update line chart data
     const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
-    const lineData = {
+    setLineChartData({
       labels: years,
       datasets: [
         {
           label: firstSelection,
-          data: years.map(() => Math.random() * 100),
+          data: firstHistoricalData,
+          borderColor: "rgb(144, 160, 255)",
+          backgroundColor: "rgba(101, 57, 160, 0.2)",
+          fill: true,
         },
         {
           label: secondSelection,
-          data: years.map(() => Math.random() * 100),
+          data: secondHistoricalData,
+          borderColor: "rgb(228, 227, 145)",
+          backgroundColor: "rgba(255, 214, 102, 0.2)",
+          fill: true,
         },
       ],
-    };
-    setLineChartData(lineData);
+    });
   };
 
   // Dynamic chart titles based on selections
-  const barChartTitle = `Comparison: ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
-  const lineChartTitle = `Trends: ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
+  const barChartTitle = `Number of Works for ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
+  const lineChartTitle = `Trends: Number of Works Over Time for ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
 
   return (
     <div
@@ -362,7 +468,7 @@ function Comparison() {
       )}
     </div>
   );
-}
+};
 
 function Timeline() {
   const [selectedOption, setSelectedOption] = useState(null);
