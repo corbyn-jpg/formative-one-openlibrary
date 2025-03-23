@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import openLibraryLogo from "../openlibrary-logo-tighter.svg";
-import "../App.css"; // Ensure the CSS file is imported
+import "../App.css"; 
 
 function Navbar() {
   return (

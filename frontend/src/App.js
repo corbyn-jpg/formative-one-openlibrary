@@ -12,8 +12,8 @@ import axios from "axios";
 import "./App.css";
 
 function Landing() {
-  const [carouselData, setCarouselData] = useState([]); // Stores book titles and images
-  const [barChartData, setBarChartData] = useState([]); // Stores bar chart data
+  const [carouselData, setCarouselData] = useState([]); 
+  const [barChartData, setBarChartData] = useState([]); 
   const [lineChartData, setLineChartData] = useState({
     labels: [],
     datasets: [],
@@ -40,16 +40,23 @@ function Landing() {
           ]);
 
         // Process carousel data
-        const allBooks = carouselResponse.data.docs.filter((book) => book.cover_i); // Filter books with cover images
+        const allBooks = carouselResponse.data.docs.filter(
+          (book) => book.cover_i
+        ); // Filter books with cover images
         const randomBooks = getRandomItems(allBooks, 5); // Select 5 random books
         const carouselBooks = randomBooks.map((book) => ({
-          name: book.title, // Book title
-          image: `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`, // Book cover image
+          image: `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`,
         }));
         setCarouselData(carouselBooks);
 
-        // Process bar chart data
-        const genres = ["Fantasy", "Science Fiction", "Mystery", "Romance", "Thriller"];
+        // Bar chart data
+        const genres = [
+          "Fantasy",
+          "Science Fiction",
+          "Mystery",
+          "Romance",
+          "Thriller",
+        ];
         const genreData = await Promise.all(
           genres.map(async (genre) => {
             const response = await axios.get(
@@ -65,10 +72,12 @@ function Landing() {
 
         // Process line chart data
         const lineChartBooks = lineChartResponse.data.docs;
-        const labels = lineChartBooks.map((book) => book.first_publish_year || "Unknown"); // Use publication years as labels
+        const labels = lineChartBooks.map(
+          (book) => book.first_publish_year || "Unknown"
+        ); 
         const dataset = {
           label: "Books Published",
-          data: lineChartBooks.map((book) => book.edition_count || 0), // Use edition count as data
+          data: lineChartBooks.map((book) => book.edition_count || 0), 
           borderColor: "rgb(144, 160, 255)",
           backgroundColor: "rgba(101, 57, 160, 0.2)",
           fill: true,
@@ -78,11 +87,11 @@ function Landing() {
           datasets: [dataset],
         });
 
-        setIsLoading(false); // Data fetching complete
+        setIsLoading(false); 
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to load data. Please try again later.");
-        setIsLoading(false); // Stop loading even if there's an error
+        setIsLoading(false);
       }
     };
 
@@ -91,8 +100,8 @@ function Landing() {
 
   // Helper function to get random items from an array
   const getRandomItems = (array, count) => {
-    const shuffled = array.sort(() => 0.5 - Math.random()); // Shuffle the array
-    return shuffled.slice(0, count); // Return the first `count` items
+    const shuffled = array.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count); 
   };
 
   // Show loading spinner or error message
@@ -169,12 +178,17 @@ function Landing() {
           />
         </div>
         <div style={{ flex: 1 }}>
-          <h2 style={{ textAlign: "center", color: "white", marginBottom: "20px" }}>
+          <h2
+            style={{
+              textAlign: "center",
+              color: "white",
+              marginBottom: "20px",
+            }}
+          >
             Featured Books
           </h2>
           <Carousel
-            images={carouselData.map((book) => book.image)} // Pass book images
-            titles={carouselData.map((book) => book.name)} // Pass book titles
+            images={carouselData.map((book) => book.image)} 
           />
         </div>
       </div>
@@ -226,8 +240,8 @@ const Comparison = () => {
           "https://openlibrary.org/search.json?q=author"
         );
         const allAuthors = authorsResponse.data.docs
-          .map((doc) => doc.author_name?.[0]) 
-          .filter((author) => author); 
+          .map((doc) => doc.author_name?.[0])
+          .filter((author) => author);
 
         // Fetch all books
         const booksResponse = await axios.get(
@@ -235,15 +249,14 @@ const Comparison = () => {
         );
         const allBooks = booksResponse.data.docs
           .map((doc) => doc.title)
-          .filter((title) => title); 
+          .filter((title) => title);
 
-        // Store all data in state
         setAuthors(allAuthors);
         setBooks(allBooks);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
@@ -252,11 +265,11 @@ const Comparison = () => {
 
   // Helper function to get random items from an array
   const getRandomItems = (array, count) => {
-    const shuffled = array.sort(() => 0.5 - Math.random()); 
-    return shuffled.slice(0, count); 
+    const shuffled = array.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
   };
 
-  // Combine authors and books into a single array for dropdown options
+  // Combine authors and books into a single array
   const dropdownOptions = [
     ...getRandomItems(authors, 4),
     ...getRandomItems(books, 4),
@@ -378,17 +391,17 @@ const Comparison = () => {
     >
       <h1>Compare Authors or Books</h1>
       {isLoading ? (
-         <div
-         style={{
-           display: "flex",
-           alignItems: "center",
-           height: "5vh",
-           fontSize: "24px",
-           color: "white",
-         }}
-       >
-         Loading...
-       </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "5vh",
+            fontSize: "24px",
+            color: "white",
+          }}
+        >
+          Loading...
+        </div>
       ) : (
         <>
           <div
@@ -511,7 +524,7 @@ function Timeline() {
     return shuffled.slice(0, count);
   };
 
-  // Combine genres and authors into a single array for dropdown options
+  // Combine genres and authors into a single array
   const dropdownOptions = [
     ...getRandomItems(genres, 4),
     ...getRandomItems(authors, 4),
@@ -526,7 +539,9 @@ function Timeline() {
       const isGenre = genres.includes(option);
       const url = isGenre
         ? `https://openlibrary.org/subjects/${option.toLowerCase()}.json?limit=10`
-        : `https://openlibrary.org/search.json?author=${encodeURIComponent(option)}&limit=10`;
+        : `https://openlibrary.org/search.json?author=${encodeURIComponent(
+            option
+          )}&limit=10`;
 
       const response = await axios.get(url);
       const fetchedBooks = isGenre

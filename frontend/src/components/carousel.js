@@ -19,7 +19,7 @@ const Carousel = React.memo(({ images, title }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000); 
+    }, 5000);
 
     return () => clearInterval(interval); // Cleanup interval on unmount
   }, [currentIndex]);
@@ -57,7 +57,7 @@ const styles = {
     margin: "0 15px",
     borderRadius: "8px",
     border: "1px solid #ddd",
-    objectFit: "fit", 
+    objectFit: "fit",
   },
   button: {
     backgroundColor: "#4f2319",

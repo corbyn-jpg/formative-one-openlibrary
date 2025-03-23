@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 const Card = ({ title, author, image, description }) => {
   return (
@@ -25,9 +24,15 @@ const Card = ({ title, author, image, description }) => {
           borderRadius: "8px",
         }}
       />
-      <h3 style={{ margin: "10px 0", fontSize: "24px", color: "#fff" }}>{title}</h3>
-      <p style={{ margin: "5px 0", fontSize: "20px", color: "#636363" }}>by {author}</p>
-      <p style={{ margin: "10px 0", fontSize: "20px", color: "#000" }}>{description}</p>
+      <h3 style={{ margin: "10px 0", fontSize: "24px", color: "#fff" }}>
+        {title}
+      </h3>
+      <p style={{ margin: "5px 0", fontSize: "20px", color: "#636363" }}>
+        by {author}
+      </p>
+      <p style={{ margin: "10px 0", fontSize: "20px", color: "#000" }}>
+        {description}
+      </p>
     </div>
   );
 };

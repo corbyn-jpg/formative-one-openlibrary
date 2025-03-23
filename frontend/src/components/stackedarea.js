@@ -6,10 +6,11 @@ const StackedAreaChart = () => {
   const chartRef = useRef(null);
   const [stack, setStack] = useState(null);
 
-  useEffect(() => { //Calling from the api
+  useEffect(() => {
+    //Calling from the api
     const fetchData = async () => {
       try {
-        // Define the genres you want to fetch data for
+        // Define the genres
         const genres = ["fiction", "nonfiction", "science_fiction", "mystery"];
         const years = [1980, 1990, 2000, 2010, 2020, 2021, 2022, 2023, 2024];
 
@@ -55,13 +56,13 @@ const StackedAreaChart = () => {
     fetchData();
   }, []);
 
-  useEffect(() => { //Making the chart
+  useEffect(() => {
     if (stack && chartRef.current) {
       const ctx = chartRef.current.getContext("2d");
 
       const chart = new Chart(ctx, {
         type: "line",
-        data: stack, // Use the `stack` state here
+        data: stack,
         options: {
           responsive: true,
           maintainAspectRatio: false,
@@ -135,7 +136,7 @@ const StackedAreaChart = () => {
 
       return () => chart.destroy(); // Cleanup on unmount
     }
-  }, [stack]); // Dependency on `stack`
+  }, [stack]);
 
   return (
     <div

@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const BarChart = ({ data, backgroundColor, borderColor, fontColor, chartTitle }) => {
+const BarChart = ({
+  data,
+  backgroundColor,
+  borderColor,
+  fontColor,
+  chartTitle,
+}) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 

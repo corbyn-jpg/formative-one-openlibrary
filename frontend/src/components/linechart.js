@@ -1,10 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
-import axios from "axios";
 
-const LineChart = ({ data, borderColors, backgroundColors, fontColor, chartTitle }) => {
+const LineChart = ({
+  data,
+  borderColors,
+  backgroundColors,
+  fontColor,
+  chartTitle,
+}) => {
   const chartRef = useRef(null);
-  const chartInstance = useRef(null); // Store the Chart.js instance
+  const chartInstance = useRef(null);
 
   useEffect(() => {
     const ctx = chartRef.current?.getContext("2d");
@@ -31,7 +36,7 @@ const LineChart = ({ data, borderColors, backgroundColors, fontColor, chartTitle
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false, 
+          maintainAspectRatio: false,
           plugins: {
             title: {
               display: true,
@@ -49,7 +54,7 @@ const LineChart = ({ data, borderColors, backgroundColors, fontColor, chartTitle
                   family: "serif",
                 },
                 color: fontColor,
-                usePointStyle: true, 
+                usePointStyle: true,
               },
             },
           },
@@ -117,7 +122,7 @@ const LineChart = ({ data, borderColors, backgroundColors, fontColor, chartTitle
         marginRight: "auto",
         marginLeft: "5%",
         marginTop: "5%",
-        position: "relative", 
+        position: "relative",
       }}
     >
       <canvas ref={chartRef} />
