@@ -11,148 +11,6 @@ import Card from "./components/card";
 import axios from "axios";
 import "./App.css";
 
-const genres = [];
-const authors = [];
-
-const popularBooks = {
-  // Existing genre data
-  Fantasy: [
-    {
-      title: "Harry Potter and the Sorcerer's Stone",
-      author: "J.K. Rowling",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
-      description: "The first book in the Harry Potter series.",
-    },
-    {
-      title: "The Hobbit",
-      author: "J.R.R. Tolkien",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/4/4a/TheHobbit_FirstEdition.jpg",
-      description: "A fantasy novel about Bilbo Baggins' adventure.",
-    },
-    {
-      title: "A Game of Thrones",
-      author: "George R.R. Martin",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
-      description: "The first book in the A Song of Ice and Fire series.",
-    },
-  ],
-  "Science Fiction": [
-    {
-      title: "Dune",
-      author: "Frank Herbert",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/d/de/Dune-Frank_Herbert_%281965%29_First_edition.jpg",
-      description: "A science fiction classic set in a distant future.",
-    },
-    {
-      title: "1984",
-      author: "George Orwell",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/5/51/1984_first_edition_cover.jpg",
-      description: "A dystopian novel about totalitarianism.",
-    },
-    {
-      title: "The Martian",
-      author: "Andy Weir",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/c/c3/The_Martian_2014.jpg",
-      description: "A story of an astronaut stranded on Mars.",
-    },
-  ],
-  Mystery: [
-    {
-      title: "The Girl with the Dragon Tattoo",
-      author: "Stieg Larsson",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/4/4c/The_Girl_with_the_Dragon_Tattoo_Poster.jpg",
-      description: "A gripping mystery novel.",
-    },
-    {
-      title: "Gone Girl",
-      author: "Gillian Flynn",
-      image: "https://upload.wikimedia.org/wikipedia/en/3/3b/Gone_Girl.jpg",
-      description: "A psychological thriller about a missing wife.",
-    },
-    {
-      title: "The Da Vinci Code",
-      author: "Dan Brown",
-      image: "https://upload.wikimedia.org/wikipedia/en/6/6b/DaVinciCode.jpg",
-      description: "A fast-paced mystery involving art and religion.",
-    },
-  ],
-
-  // Simulated data for authors
-  "J.K. Rowling": [
-    {
-      title: "Harry Potter and the Sorcerer's Stone",
-      author: "J.K. Rowling",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
-      description: "The first book in the Harry Potter series.",
-    },
-    {
-      title: "Harry Potter and the Chamber of Secrets",
-      author: "J.K. Rowling",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg",
-      description: "The second book in the Harry Potter series.",
-    },
-    {
-      title: "Harry Potter and the Prisoner of Azkaban",
-      author: "J.K. Rowling",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg",
-      description: "The third book in the Harry Potter series.",
-    },
-  ],
-  "George R.R. Martin": [
-    {
-      title: "A Game of Thrones",
-      author: "George R.R. Martin",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
-      description: "The first book in the A Song of Ice and Fire series.",
-    },
-    {
-      title: "A Clash of Kings",
-      author: "George R.R. Martin",
-      image: "https://upload.wikimedia.org/wikipedia/en/2/2c/AClashOfKings.jpg",
-      description: "The second book in the A Song of Ice and Fire series.",
-    },
-    {
-      title: "A Storm of Swords",
-      author: "George R.R. Martin",
-      image: "https://upload.wikimedia.org/wikipedia/en/1/1c/ASOS.jpg",
-      description: "The third book in the A Song of Ice and Fire series.",
-    },
-  ],
-  "Brandon Sanderson": [
-    {
-      title: "Mistborn: The Final Empire",
-      author: "Brandon Sanderson",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/4/4e/Mistborn_cover.jpg",
-      description: "The first book in the Mistborn series.",
-    },
-    {
-      title: "The Way of Kings",
-      author: "Brandon Sanderson",
-      image: "https://upload.wikimedia.org/wikipedia/en/8/8b/TheWayOfKings.png",
-      description: "The first book in The Stormlight Archive series.",
-    },
-    {
-      title: "Words of Radiance",
-      author: "Brandon Sanderson",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/8/8f/Words_of_Radiance_US_Hardback_Cover_2014.jpg",
-      description: "The second book in The Stormlight Archive series.",
-    },
-  ],
-};
-
 function Landing() {
   const [carouselData, setCarouselData] = useState([]); // Stores book titles and images
   const [barChartData, setBarChartData] = useState([]); // Stores bar chart data
@@ -610,10 +468,89 @@ const Comparison = () => {
 function Timeline() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [books, setBooks] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [authors, setAuthors] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleSelect = (option) => {
+  // Fetch genres and authors on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch genres
+        const genresResponse = await axios.get(
+          "https://openlibrary.org/subjects/fiction.json"
+        );
+        const allGenres = genresResponse.data.works
+          .map((work) => work.subject?.[0])
+          .filter((genre) => genre);
+
+        // Fetch authors
+        const authorsResponse = await axios.get(
+          "https://openlibrary.org/search.json?q=author"
+        );
+        const allAuthors = authorsResponse.data.docs
+          .map((doc) => doc.author_name?.[0])
+          .filter((author) => author);
+
+        // Set genres and authors in state
+        setGenres(allGenres);
+        setAuthors(allAuthors);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Helper function to get random items from an array
+  const getRandomItems = (array, count) => {
+    const shuffled = array.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+
+  // Combine genres and authors into a single array for dropdown options
+  const dropdownOptions = [
+    ...getRandomItems(genres, 4),
+    ...getRandomItems(authors, 4),
+  ];
+
+  const handleSelect = async (option) => {
     setSelectedOption(option);
-    setBooks(popularBooks[option] || []);
+    setIsLoading(true);
+
+    try {
+      // Determine if the selected option is a genre or an author
+      const isGenre = genres.includes(option);
+      const url = isGenre
+        ? `https://openlibrary.org/subjects/${option.toLowerCase()}.json?limit=10`
+        : `https://openlibrary.org/search.json?author=${encodeURIComponent(option)}&limit=10`;
+
+      const response = await axios.get(url);
+      const fetchedBooks = isGenre
+        ? response.data.works.map((work) => ({
+            title: work.title,
+            author: work.authors?.[0]?.name || "Unknown",
+            image: work.cover_id
+              ? `https://covers.openlibrary.org/b/id/${work.cover_id}-L.jpg`
+              : "https://via.placeholder.com/150", // Fallback image
+          }))
+        : response.data.docs.map((doc) => ({
+            title: doc.title,
+            author: doc.author_name?.[0] || "Unknown",
+            image: doc.cover_i
+              ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`
+              : "https://via.placeholder.com/150", // Fallback image
+          }));
+
+      setBooks(fetchedBooks);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -634,11 +571,25 @@ function Timeline() {
           margin: "20px",
         }}
       >
-        <Dropdown
-          options={genres.concat(authors)} // Combine genres and authors
-          onSelect={handleSelect}
-          placeholder="Select a genre or author"
-        />
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              height: "5vh",
+              fontSize: "24px",
+              color: "white",
+            }}
+          >
+            Loading...
+          </div>
+        ) : (
+          <Dropdown
+            options={dropdownOptions}
+            onSelect={handleSelect}
+            placeholder="Select a genre or author"
+          />
+        )}
       </div>
 
       {selectedOption && (
@@ -650,15 +601,20 @@ function Timeline() {
             margin: "20px",
           }}
         >
-          {books.map((book, index) => (
-            <Card
-              key={index}
-              title={book.title}
-              author={book.author}
-              image={book.image}
-              description={book.description}
-            />
-          ))}
+          {books.length > 0 ? (
+            books.map((book, index) => (
+              <Card
+                key={index}
+                title={book.title}
+                author={book.author}
+                image={book.image}
+              />
+            ))
+          ) : (
+            <p style={{ color: "white", fontSize: "20px" }}>
+              No books found for the selected option.
+            </p>
+          )}
         </div>
       )}
     </div>

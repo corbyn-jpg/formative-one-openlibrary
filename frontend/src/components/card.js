@@ -20,8 +20,8 @@ const Card = ({ title, author, image, description }) => {
         alt={title}
         style={{
           width: "100%",
-          height: "60vh",
-          objectFit: "cover",
+          height: "65vh",
+          objectFit: "fit",
           borderRadius: "8px",
         }}
       />
