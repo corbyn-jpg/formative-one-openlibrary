@@ -69,6 +69,7 @@ const styles = {
     fontSize: "28px",
     height: "70px",
     borderRadius: "8px",
+    margin: "1vh"
   },
   logoContainer: {
     flex: 0,

@@ -165,7 +165,7 @@ function Landing() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          margin: "20px 5%",
+          margin: "2vh 5%",
           gap: "20px",
         }}
       >
