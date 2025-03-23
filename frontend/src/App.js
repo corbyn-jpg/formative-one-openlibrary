@@ -298,7 +298,7 @@ const Comparison = () => {
 
   // Fetch historical data for the line chart
   const fetchHistoricalData = async (query, type) => {
-    const years = [1980, 1990, 2000, 2010, 2020, 2021, 2022, 2023, 2024];
+    const years = [1900, 1910, 1920, 1930, 1940, 1950, 1950, 1970, 1980, 1990, 2000, 2010, 2020];
     const data = await Promise.all(
       years.map(async (year) => {
         let url = "";
