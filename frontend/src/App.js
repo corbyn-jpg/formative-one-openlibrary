@@ -27,19 +27,22 @@ const popularBooks = {
     {
       title: "Harry Potter and the Sorcerer's Stone",
       author: "J.K. Rowling",
-      image: "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
       description: "The first book in the Harry Potter series.",
     },
     {
       title: "The Hobbit",
       author: "J.R.R. Tolkien",
-      image: "https://upload.wikimedia.org/wikipedia/en/4/4a/TheHobbit_FirstEdition.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/4/4a/TheHobbit_FirstEdition.jpg",
       description: "A fantasy novel about Bilbo Baggins' adventure.",
     },
     {
       title: "A Game of Thrones",
       author: "George R.R. Martin",
-      image: "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
       description: "The first book in the A Song of Ice and Fire series.",
     },
   ],
@@ -47,19 +50,22 @@ const popularBooks = {
     {
       title: "Dune",
       author: "Frank Herbert",
-      image: "https://upload.wikimedia.org/wikipedia/en/d/de/Dune-Frank_Herbert_%281965%29_First_edition.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/d/de/Dune-Frank_Herbert_%281965%29_First_edition.jpg",
       description: "A science fiction classic set in a distant future.",
     },
     {
       title: "1984",
       author: "George Orwell",
-      image: "https://upload.wikimedia.org/wikipedia/en/5/51/1984_first_edition_cover.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/5/51/1984_first_edition_cover.jpg",
       description: "A dystopian novel about totalitarianism.",
     },
     {
       title: "The Martian",
       author: "Andy Weir",
-      image: "https://upload.wikimedia.org/wikipedia/en/c/c3/The_Martian_2014.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/c/c3/The_Martian_2014.jpg",
       description: "A story of an astronaut stranded on Mars.",
     },
   ],
@@ -67,7 +73,8 @@ const popularBooks = {
     {
       title: "The Girl with the Dragon Tattoo",
       author: "Stieg Larsson",
-      image: "https://upload.wikimedia.org/wikipedia/en/4/4c/The_Girl_with_the_Dragon_Tattoo_Poster.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/4/4c/The_Girl_with_the_Dragon_Tattoo_Poster.jpg",
       description: "A gripping mystery novel.",
     },
     {
@@ -89,19 +96,22 @@ const popularBooks = {
     {
       title: "Harry Potter and the Sorcerer's Stone",
       author: "J.K. Rowling",
-      image: "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
       description: "The first book in the Harry Potter series.",
     },
     {
       title: "Harry Potter and the Chamber of Secrets",
       author: "J.K. Rowling",
-      image: "https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg",
       description: "The second book in the Harry Potter series.",
     },
     {
       title: "Harry Potter and the Prisoner of Azkaban",
       author: "J.K. Rowling",
-      image: "https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg",
       description: "The third book in the Harry Potter series.",
     },
   ],
@@ -109,7 +119,8 @@ const popularBooks = {
     {
       title: "A Game of Thrones",
       author: "George R.R. Martin",
-      image: "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
       description: "The first book in the A Song of Ice and Fire series.",
     },
     {
@@ -129,7 +140,8 @@ const popularBooks = {
     {
       title: "Mistborn: The Final Empire",
       author: "Brandon Sanderson",
-      image: "https://upload.wikimedia.org/wikipedia/en/4/4e/Mistborn_cover.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/4/4e/Mistborn_cover.jpg",
       description: "The first book in the Mistborn series.",
     },
     {
@@ -141,7 +153,8 @@ const popularBooks = {
     {
       title: "Words of Radiance",
       author: "Brandon Sanderson",
-      image: "https://upload.wikimedia.org/wikipedia/en/8/8f/Words_of_Radiance_US_Hardback_Cover_2014.jpg",
+      image:
+        "https://upload.wikimedia.org/wikipedia/en/8/8f/Words_of_Radiance_US_Hardback_Cover_2014.jpg",
       description: "The second book in The Stormlight Archive series.",
     },
   ],
@@ -230,7 +243,10 @@ function Landing() {
           <LineChart
             data={lineChartData}
             borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
-            backgroundColors={["rgba(101, 57, 160, 0.2)", "rgba(255, 214, 102, 0.2)"]}
+            backgroundColors={[
+              "rgba(101, 57, 160, 0.2)",
+              "rgba(255, 214, 102, 0.2)",
+            ]}
             fontColor="white"
             chartTitle="Trends in Book Publishing Over the Years"
           />
@@ -253,59 +269,69 @@ const Comparison = () => {
   });
   const [authors, setAuthors] = useState([]);
   const [books, setBooks] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
 
-  // Fetch random authors, books, and genres on component mount
+  // Fetch all authors and books on component mount
   useEffect(() => {
-    const fetchRandomData = async () => {
+    const fetchAllData = async () => {
       try {
-        // Fetch random authors
+        // Fetch all authors
         const authorsResponse = await axios.get(
-          "https://openlibrary.org/search.json?q=author&limit=3"
+          "https://openlibrary.org/search.json?q=author"
         );
-        const randomAuthors = authorsResponse.data.docs.map(
-          (doc) => doc.author_name[0]
-        );
-        setAuthors(randomAuthors);
+        const allAuthors = authorsResponse.data.docs
+          .map((doc) => doc.author_name?.[0]) // Use optional chaining to avoid errors
+          .filter((author) => author); // Filter out undefined values
 
-        // Fetch random books
+        // Fetch all books
         const booksResponse = await axios.get(
-          "https://openlibrary.org/search.json?q=title&limit=3"
+          "https://openlibrary.org/search.json?q=title"
         );
-        const randomBooks = booksResponse.data.docs.map((doc) => doc.title);
-        setBooks(randomBooks);
+        const allBooks = booksResponse.data.docs
+          .map((doc) => doc.title)
+          .filter((title) => title); // Filter out undefined values
 
-        // Use a predefined list of genres
-        const predefinedGenres = [
-          "Fiction",
-          "Non-Fiction",
-          "Science Fiction",
-          "Fantasy",
-          "Mystery",
-        ];
-        setGenres(predefinedGenres.slice(0, 3)); // Select first 3 genres
+        // Store all data in state
+        setAuthors(allAuthors);
+        setBooks(allBooks);
       } catch (error) {
-        console.error("Error fetching random data:", error);
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false once data is fetched
       }
     };
 
-    fetchRandomData();
-  }, []);
+    fetchAllData();
+  }, []); // Empty dependency array ensures this runs only on mount
+
+  // Helper function to get random items from an array
+  const getRandomItems = (array, count) => {
+    const shuffled = array.sort(() => 0.5 - Math.random()); // Shuffle the array
+    return shuffled.slice(0, count); // Return the first `count` items
+  };
+
+  // Combine 4 random authors and 4 random books into a single array for dropdown options
+  const dropdownOptions = [
+    ...getRandomItems(authors, 4),
+    ...getRandomItems(books, 4),
+  ];
 
   // Fetch data from the Open Library API
   const fetchData = async (query, type) => {
     let url = "";
     if (type === "author") {
-      url = `https://openlibrary.org/search.json?author=${encodeURIComponent(query)}`;
+      url = `https://openlibrary.org/search.json?author=${encodeURIComponent(
+        query
+      )}`;
     } else if (type === "title") {
-      url = `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`;
-    } else if (type === "subject") {
-      url = `https://openlibrary.org/subjects/${query.toLowerCase()}.json`;
+      url = `https://openlibrary.org/search.json?title=${encodeURIComponent(
+        query
+      )}`;
     }
 
     try {
       const response = await axios.get(url);
-      return response.data.numFound || 0; // Return the number of works found
+      return response.data.numFound || 0;
     } catch (error) {
       console.error("Error fetching data:", error);
       return 0;
@@ -314,28 +340,36 @@ const Comparison = () => {
 
   // Fetch historical data for the line chart
   const fetchHistoricalData = async (query, type) => {
-    const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    const years = [1980, 1990, 2000, 2010, 2020, 2021, 2022, 2023, 2024];
     const data = await Promise.all(
       years.map(async (year) => {
         let url = "";
         if (type === "author") {
-          url = `https://openlibrary.org/search.json?author=${encodeURIComponent(query)}&published_in=${year}`;
+          url = `https://openlibrary.org/search.json?author=${encodeURIComponent(
+            query
+          )}&published_in=${year}`;
         } else if (type === "title") {
-          url = `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}&published_in=${year}`;
-        } else if (type === "subject") {
-          url = `https://openlibrary.org/subjects/${query.toLowerCase()}.json?published_in=${year}`;
+          url = `https://openlibrary.org/search.json?title=${encodeURIComponent(
+            query
+          )}&published_in=${year}`;
         }
 
         try {
           const response = await axios.get(url);
-          return response.data.numFound || 0;
+          return { year, count: response.data.numFound || 0 };
         } catch (error) {
           console.error("Error fetching historical data:", error);
-          return 0;
+          return { year, count: 0 };
         }
       })
     );
-    return data;
+
+    // Filter out years with no data
+    const filteredData = data.filter((item) => item.count > 0);
+    return {
+      labels: filteredData.map((item) => item.year),
+      data: filteredData.map((item) => item.count),
+    };
   };
 
   const handleSubmit = async () => {
@@ -344,47 +378,41 @@ const Comparison = () => {
       return;
     }
 
-    // Determine the type of selection (author, title, or subject)
-    const firstType = authors.includes(firstSelection)
-      ? "author"
-      : books.includes(firstSelection)
-      ? "title"
-      : "subject";
-    const secondType = authors.includes(secondSelection)
-      ? "author"
-      : books.includes(secondSelection)
-      ? "title"
-      : "subject";
+    // Determine the type of selection (author or title)
+    const firstType = authors.includes(firstSelection) ? "author" : "title";
+    const secondType = authors.includes(secondSelection) ? "author" : "title";
 
     // Fetch data for both selections
     const firstData = await fetchData(firstSelection, firstType);
     const secondData = await fetchData(secondSelection, secondType);
 
-    // Fetch historical data for the line chart
-    const firstHistoricalData = await fetchHistoricalData(firstSelection, firstType);
-    const secondHistoricalData = await fetchHistoricalData(secondSelection, secondType);
+    const firstHistoricalData = await fetchHistoricalData(
+      firstSelection,
+      firstType
+    );
+    const secondHistoricalData = await fetchHistoricalData(
+      secondSelection,
+      secondType
+    );
 
-    // Update comparison data for the bar chart
     setComparisonData([
       { label: firstSelection, value: firstData },
       { label: secondSelection, value: secondData },
     ]);
 
-    // Update line chart data
-    const years = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
     setLineChartData({
-      labels: years,
+      labels: firstHistoricalData.labels,
       datasets: [
         {
           label: firstSelection,
-          data: firstHistoricalData,
+          data: firstHistoricalData.data,
           borderColor: "rgb(144, 160, 255)",
           backgroundColor: "rgba(101, 57, 160, 0.2)",
           fill: true,
         },
         {
           label: secondSelection,
-          data: secondHistoricalData,
+          data: secondHistoricalData.data,
           borderColor: "rgb(228, 227, 145)",
           backgroundColor: "rgba(255, 214, 102, 0.2)",
           fill: true,
@@ -392,10 +420,6 @@ const Comparison = () => {
       ],
     });
   };
-
-  // Dynamic chart titles based on selections
-  const barChartTitle = `Number of Works for ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
-  const lineChartTitle = `Trends: Number of Works Over Time for ${firstSelection || "Option 1"} vs ${secondSelection || "Option 2"}`;
 
   return (
     <div
@@ -406,65 +430,78 @@ const Comparison = () => {
         margin: "20px",
       }}
     >
-      <h1>Compare Authors, Books, or Genres</h1>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "20px",
-        }}
-      >
-        <Dropdown
-          options={authors.concat(books).concat(genres)}
-          onSelect={setFirstSelection}
-          placeholder="Select first option"
-        />
-        <Dropdown
-          options={authors.concat(books).concat(genres)}
-          onSelect={setSecondSelection}
-          placeholder="Select second option"
-        />
-        <button
-          onClick={handleSubmit}
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#4bc089",
-            color: "white",
-            fontFamily: "serif",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "20px",
-            marginLeft: "10px",
-          }}
-        >
-          Compare
-        </button>
-      </div>
+      <h1>Compare Authors or Books</h1>
+      {isLoading ? (
+        <p>Loading...</p> // Show loading message while data is being fetched
+      ) : (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "20px",
+            }}
+          >
+            <Dropdown
+              options={dropdownOptions}
+              onSelect={setFirstSelection}
+              placeholder="Select first option"
+            />
+            <Dropdown
+              options={dropdownOptions}
+              onSelect={setSecondSelection}
+              placeholder="Select second option"
+            />
+            <button
+              onClick={handleSubmit}
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "#4bc089",
+                color: "white",
+                fontFamily: "serif",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "20px",
+                marginLeft: "10px",
+              }}
+            >
+              Compare
+            </button>
+          </div>
 
-      {comparisonData.length > 0 && (
-        <div style={{ width: "80%", margin: "20px" }}>
-          <BarChart
-            data={comparisonData}
-            backgroundColor="rgba(35, 79, 146, 0.8)"
-            borderColor="rgb(144, 160, 255)"
-            fontColor="white"
-            chartTitle={barChartTitle}
-          />
-        </div>
-      )}
+          {comparisonData.length > 0 && (
+            <div style={{ width: "80%", margin: "20px" }}>
+              <BarChart
+                data={comparisonData}
+                backgroundColor="rgba(35, 79, 146, 0.8)"
+                borderColor="rgb(144, 160, 255)"
+                fontColor="white"
+                chartTitle={`Number of Works for ${
+                  firstSelection || "Option 1"
+                } vs ${secondSelection || "Option 2"}`}
+              />
+            </div>
+          )}
 
-      {lineChartData.labels.length > 0 && (
-        <div style={{ width: "80%", margin: "20px" }}>
-          <LineChart
-            data={lineChartData}
-            borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
-            backgroundColors={["rgba(101, 57, 160, 0.2)", "rgba(255, 214, 102, 0.2)"]}
-            fontColor="white"
-            chartTitle={lineChartTitle}
-          />
-        </div>
+          {lineChartData.labels.length > 0 && (
+            <div style={{ width: "80%", margin: "20px" }}>
+              <LineChart
+                data={lineChartData}
+                borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
+                backgroundColors={[
+                  "rgba(101, 57, 160, 0.2)",
+                  "rgba(255, 214, 102, 0.2)",
+                ]}
+                fontColor="white"
+                chartTitle={`Trends: Number of Works Over Time for ${
+                  firstSelection || "Option 1"
+                } vs ${secondSelection || "Option 2"}`}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );
@@ -527,7 +564,6 @@ function Timeline() {
     </div>
   );
 }
-
 
 function App() {
   return (

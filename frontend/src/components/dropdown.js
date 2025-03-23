@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 
-const Dropdown = ({ options, onSelect, placeholder }) => {
+const Dropdown = ({ options = [], onSelect, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -25,9 +24,7 @@ const Dropdown = ({ options, onSelect, placeholder }) => {
               key={index}
               style={{
                 ...styles.dropdownItem,
-                ...(selectedOption === option
-                  ? styles.dropdownItemHover
-                  : {}),
+                ...(selectedOption === option ? styles.dropdownItemHover : {}),
               }}
               onClick={() => handleOptionClick(option)}
             >
@@ -41,46 +38,46 @@ const Dropdown = ({ options, onSelect, placeholder }) => {
 };
 
 const styles = {
-    dropdown: {
-      position: "relative",
-      display: "inline-block",
-      margin: "10px",
-    },
-    dropdownToggle: {
-      backgroundColor: "#4f2319",
-      width: "15vw",
-      color: "#fff",
-      textAlign: "center",
-      padding: "10px 20px",
-      border: "none",
-      cursor: "pointer",
-      borderRadius: "4px",
-      fontSize: "20px",
-      fontFamily: "serif"
-    },
-    dropdownMenu: {
-      position: "absolute",
-      top: "100%",
-      left: "0",
-      backgroundColor: "#C19A84",
-      width: "15vw",
-      minWidth: "160px",
-      fontSize: "20px",
-      boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
-      zIndex: "1",
-      listStyleType: "none",
-      padding: "0",
-      margin: "0",
-      borderRadius: "4px",
-    },
-    dropdownItem: {
-      padding: "12px 16px",
-      cursor: "pointer",
-      color: "#000",
-    },
-    dropdownItemHover: {
-      backgroundColor: "#4bc089",
-    },
-  };
+  dropdown: {
+    position: "relative",
+    display: "inline-block",
+    margin: "10px",
+  },
+  dropdownToggle: {
+    backgroundColor: "#4f2319",
+    width: "15vw",
+    color: "#fff",
+    textAlign: "center",
+    padding: "10px 20px",
+    border: "none",
+    cursor: "pointer",
+    borderRadius: "4px",
+    fontSize: "20px",
+    fontFamily: "serif",
+  },
+  dropdownMenu: {
+    position: "absolute",
+    top: "100%",
+    left: "0",
+    backgroundColor: "#C19A84",
+    width: "15vw",
+    minWidth: "160px",
+    fontSize: "20px",
+    boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
+    zIndex: "1",
+    listStyleType: "none",
+    padding: "0",
+    margin: "0",
+    borderRadius: "4px",
+  },
+  dropdownItem: {
+    padding: "12px 16px",
+    cursor: "pointer",
+    color: "#000",
+  },
+  dropdownItemHover: {
+    backgroundColor: "#4bc089",
+  },
+};
 
 export default Dropdown;
