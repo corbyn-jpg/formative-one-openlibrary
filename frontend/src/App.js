@@ -4,6 +4,7 @@ import Navbar from "./components/navbar";
 import Carousel from "./components/carousel";
 import heroImage from "./Assets/Hero.jpeg";
 import BarChart from "./components/barchart";
+import SearchResults from "./components/searchresults";
 import LineChart from "./components/linechart";
 import StackedAreaChart from "./components/stackedarea";
 import Dropdown from "./components/dropdown";
@@ -12,8 +13,8 @@ import axios from "axios";
 import "./App.css";
 
 function Landing() {
-  const [carouselData, setCarouselData] = useState([]); 
-  const [barChartData, setBarChartData] = useState([]); 
+  const [carouselData, setCarouselData] = useState([]);
+  const [barChartData, setBarChartData] = useState([]);
   const [lineChartData, setLineChartData] = useState({
     labels: [],
     datasets: [],
@@ -74,10 +75,10 @@ function Landing() {
         const lineChartBooks = lineChartResponse.data.docs;
         const labels = lineChartBooks.map(
           (book) => book.first_publish_year || "Unknown"
-        ); 
+        );
         const dataset = {
           label: "Books Published",
-          data: lineChartBooks.map((book) => book.edition_count || 0), 
+          data: lineChartBooks.map((book) => book.edition_count || 0),
           borderColor: "rgb(144, 160, 255)",
           backgroundColor: "rgba(101, 57, 160, 0.2)",
           fill: true,
@@ -87,7 +88,7 @@ function Landing() {
           datasets: [dataset],
         });
 
-        setIsLoading(false); 
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Failed to load data. Please try again later.");
@@ -101,7 +102,7 @@ function Landing() {
   // Helper function to get random items from an array
   const getRandomItems = (array, count) => {
     const shuffled = array.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count); 
+    return shuffled.slice(0, count);
   };
 
   // Show loading spinner or error message
@@ -187,9 +188,7 @@ function Landing() {
           >
             Featured Books
           </h2>
-          <Carousel
-            images={carouselData.map((book) => book.image)} 
-          />
+          <Carousel images={carouselData.map((book) => book.image)} />
         </div>
       </div>
 
@@ -638,14 +637,7 @@ function Timeline() {
 
 function App() {
   return (
-    <div
-      className="App"
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f0f0f0",
-        padding: "20px",
-      }}
-    >
+    <div className="App">
       <Router>
         <Navbar />
         <Routes>
@@ -653,6 +645,7 @@ function App() {
           <Route path="/home" element={<Landing />} />
           <Route path="/comparison" element={<Comparison />} />
           <Route path="/timeline" element={<Timeline />} />
+          <Route path="/search" element={<SearchResults />} />
         </Routes>
       </Router>
     </div>

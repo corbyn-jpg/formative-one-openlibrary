@@ -1,12 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import openLibraryLogo from "../openlibrary-logo-tighter.svg";
-import "../App.css"; 
+import "../App.css";
 
 function Navbar() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+  // Handle search input change
+  const handleInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Handle search button click
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      setSearchQuery(""); // Clear the search input
+    }
+  };
+
   return (
     <nav style={styles.navbar}>
-      {/* Logo on the left */}
       <div style={styles.logoContainer}>
         <img
           src={openLibraryLogo}
@@ -28,7 +43,16 @@ function Navbar() {
       </div>
 
       <div style={styles.searchContainer}>
-        <input type="text" placeholder="Search..." style={styles.searchInput} />
+        <input
+          type="text"
+          placeholder="Search..."
+          style={styles.searchInput}
+          value={searchQuery}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleSearch} style={styles.searchButton}>
+          🔍
+        </button>
       </div>
     </nav>
   );
@@ -68,6 +92,8 @@ const styles = {
     flex: 1,
     display: "flex",
     justifyContent: "flex-end",
+    alignItems: "center",
+    gap: "10px",
   },
   searchInput: {
     padding: "10px",
@@ -77,6 +103,18 @@ const styles = {
     outline: "none",
     width: "200px",
     fontFamily: "serif",
+  },
+  searchButton: {
+    padding: "10px 15px",
+    backgroundColor: "#4bc089",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    fontSize: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 };
 
