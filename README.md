@@ -2,7 +2,9 @@
 
 **To make all published works of humankind available to everyone globally**
 
-![Open Library Logo](https://github.com/user-attachments/assets/d5f5734c-cc27-425b-acad-cf0545f24fb2)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/d5f5734c-cc27-425b-acad-cf0545f24fb2" alt="Open Library Logo">
+</div>
 
 ---
 
@@ -65,17 +67,17 @@ npm start
 
 ## Features
 ### Home Page
-![Home](https://github.com/user-attachments/assets/4c111c7a-04fe-4c9b-95f0-585f5119b66e)
-<em>Interactive charts (bar/line) and a book carousel</em>
+<div align="center"> <img src="https://github.com/user-attachments/assets/4c111c7a-04fe-4c9b-95f0-585f5119b66e" alt="Home Page"> 
+   <p><em>Interactive charts (bar/line) and a book carousel</em></p> </div>
 
 ### Comparison Page
-![Comparison](https://github.com/user-attachments/assets/87167a99-0550-4125-9ddd-7d901abd2d05)
-<em>Compare authors/books with dynamic visualizations.</em>
+<div align="center"> <img src="https://github.com/user-attachments/assets/87167a99-0550-4125-9ddd-7d901abd2d05" alt="Comparison Page"> 
+   <p><em>Compare authors/books with dynamic visualizations</em></p> </div>
 
 ### Timeline Page
-![Timeline](https://github.com/user-attachments/assets/da13584d-6fd8-4e01-a5e1-43fd4bf4811d)
-<em>Filter books by genre/author and find their best books.</em>
-
+<div align="center"> <img src="https://github.com/user-attachments/assets/da13584d-6fd8-4e01-a5e1-43fd4bf4811d" alt="Timeline Page"> 
+   <p><em>Filter books by genre/author and find their best books</em></p> </div>
+   
 ## Concept Process
 ### Ideation
 - **Goal:** Simplify complex literary data into digestible visuals.
@@ -94,11 +96,13 @@ npm start
 ### Wireframes
 <em>Mid-fidelity mockups of the dashboard layout.</em>
 
-![WireframeHome](https://github.com/user-attachments/assets/7564b90e-9bd5-40da-a007-469b341afedf)
-![WireframeComparison](https://github.com/user-attachments/assets/ad49d183-881f-4274-bdea-87f05701703c)
-![WireframeTimeline](https://github.com/user-attachments/assets/105fafb1-9e6a-4fe9-9480-6ff66dd72a48)
+<div align="center"> <p><em>Mid-fidelity mockups of the dashboard layout</em></p> 
+   <img src="https://github.com/user-attachments/assets/7564b90e-9bd5-40da-a007-469b341afedf" alt="Home Wireframe"> 
+   <img src="https://github.com/user-attachments/assets/ad49d183-881f-4274-bdea-87f05701703c" alt="Comparison Wireframe"> 
+   <img src="https://github.com/user-attachments/assets/105fafb1-9e6a-4fe9-9480-6ff66dd72a48" alt="Timeline Wireframe"> </div>
 
-##Development Hightlights
+
+## Development Hightlights
 ### Highlights
 **Successfully integrated the Open Library API with multiple endpoints to deliver:**
 
@@ -133,7 +137,7 @@ npm start
 
 ## Final Outcome
 ### Mockup
-![Mockup](https://github.com/user-attachments/assets/bafe3a76-7540-423b-b4a9-9ea0fe24feb0)
+<div align="center"> <img src="https://github.com/user-attachments/assets/bafe3a76-7540-423b-b4a9-9ea0fe24feb0" alt="Final Mockup"> </div>
 
 ### Live Demo
 - fhwe
