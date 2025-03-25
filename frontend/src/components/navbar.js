@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import openLibraryLogo from "../openlibrary-logo-tighter.svg";
+import openLibraryLogo from "../Assets/openlibrary-logo-tighter.svg";
 import "../App.css";
 
 function Navbar() {
