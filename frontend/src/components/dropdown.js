@@ -45,7 +45,7 @@ const styles = {
   },
   dropdownToggle: {
     backgroundColor: "#4f2319",
-    width: "15vw",
+    width: "25vw",
     color: "#fff",
     textAlign: "center",
     padding: "10px 20px",
