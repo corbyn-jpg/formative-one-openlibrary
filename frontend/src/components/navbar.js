@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import openLibraryLogo from "../Assets/openlibrary-logo-tighter.svg";
+import Search from "../Assets/search.png";
 import "../App.css";
 
 function Navbar() {
@@ -223,7 +224,11 @@ function Navbar() {
           aria-label="Search"
           className="search-button"
         >
-          
+          <img
+            src={Search}
+            alt="Search"
+            style={{ height: "3vh", minHeight: "15px", width: "auto" }}
+          />
         </button>
       </div>
     </nav>
