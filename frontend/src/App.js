@@ -9,6 +9,7 @@ import LineChart from "./components/linechart";
 import StackedAreaChart from "./components/stackedarea";
 import Dropdown from "./components/dropdown";
 import Card from "./components/card";
+import Footer from "./components/footer";
 import axios from "axios";
 import "./App.css";
 
@@ -647,6 +648,7 @@ function App() {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/search" element={<SearchResults />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

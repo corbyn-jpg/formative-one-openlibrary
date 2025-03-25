@@ -60,8 +60,8 @@ const styles = {
     objectFit: "fit",
   },
   button: {
-    backgroundColor: "#4f2319",
-    color: "#fff",
+    backgroundColor: "#4bc089",
+    color: "#4f2319",
     border: "none",
     borderRadius: "8px",
     padding: "10px 15px",
