@@ -86,10 +86,10 @@ npm start
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| Primary Colour 1 | ![#Primary1](https://github.com/user-attachments/assets/80d6131f-42e8-424f-8f82-f733decb1b45)#C19A84 |
-| Primary Colour 2 | ![Primary2](https://github.com/user-attachments/assets/d4c413d8-b04e-41b6-beb8-02ce304ea4b3)#51352C |
-| Secondary Colour | ![Secondary](https://github.com/user-attachments/assets/f9fb6174-6d8d-4948-9446-658e9526c6fe)#4bc089 | 
-| Accent Colour | ![Accent](https://github.com/user-attachments/assets/f406d3b3-249b-4f88-aaad-6e13c9acb027)#fff |
+| Primary Colour 1 | ![#Primary1](https://github.com/user-attachments/assets/80d6131f-42e8-424f-8f82-f733decb1b45) <em>#C19A84</em> |
+| Primary Colour 2 | ![Primary2](https://github.com/user-attachments/assets/d4c413d8-b04e-41b6-beb8-02ce304ea4b3) <em>#51352C</em> |
+| Secondary Colour | ![Secondary](https://github.com/user-attachments/assets/f9fb6174-6d8d-4948-9446-658e9526c6fe) <em>#4bc089</em> | 
+| Accent Colour | ![Accent](https://github.com/user-attachments/assets/f406d3b3-249b-4f88-aaad-6e13c9acb027) <em>#fff</em> |
 
 - **Typography:** Serif fonts (e.g., Georgia) for readability and matching the theme.
 
