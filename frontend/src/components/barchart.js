@@ -118,6 +118,7 @@ const BarChart = ({
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
         height: "55vh",
+        width: "auto",
         margin: "20px",
         padding: "10px",
         borderRadius: "8px",

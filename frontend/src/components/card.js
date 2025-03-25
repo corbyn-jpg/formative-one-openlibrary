@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({ title, author, image, description }) => {
+const Card = ({ title, author, image }) => {
   return (
     <div
       style={{
@@ -29,9 +29,6 @@ const Card = ({ title, author, image, description }) => {
       </h3>
       <p style={{ margin: "5px 0", fontSize: "20px", color: "#636363" }}>
         by {author}
-      </p>
-      <p style={{ margin: "10px 0", fontSize: "20px", color: "#000" }}>
-        {description}
       </p>
     </div>
   );

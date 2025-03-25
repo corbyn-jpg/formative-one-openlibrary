@@ -169,7 +169,7 @@ function Landing() {
           gap: "20px",
         }}
       >
-        <div style={{ flex: 2 }}>
+        <div style={{ flex: 2, width: "60vw" }}>
           <BarChart
             data={barChartData}
             backgroundColor="rgba(35, 79, 146, 0.8)"

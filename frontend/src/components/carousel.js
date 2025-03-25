@@ -52,7 +52,7 @@ const styles = {
     justifyContent: "center",
   },
   image: {
-    width: "400px",
+    width: "20vw",
     height: "50vh",
     margin: "0 15px",
     borderRadius: "8px",
