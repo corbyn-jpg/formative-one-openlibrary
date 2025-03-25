@@ -83,7 +83,7 @@ h1{
 }
 
 .footer {
-  background-color: #4f2319;
+  background-color: #51352C;
   color: white;
   margin-top: auto;
   padding: 1rem 0;
@@ -129,19 +129,21 @@ h1{
   color: #4bc089;
 }
 
-.social-icons {
+.social-links a {
+  text-decoration: none;
+  padding: 0.5vh;
+  color: inherit;
   display: flex;
-  gap: 1rem;
+  text-align: center;
+  justify-content: center;
 }
 
-.social-icons a {
-  color: white;
-  font-size: 1.5rem;
-  transition: color 0.3s;
-}
-
-.social-icons a:hover {
+.social-links a:hover{
   color: #4bc089;
+}
+
+.social-links a:last-child {
+  margin-right: 0;
 }
 
 .footer-bottom {
