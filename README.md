@@ -140,7 +140,7 @@ npm start
 <div align="center"> <img src="https://github.com/user-attachments/assets/bafe3a76-7540-423b-b4a9-9ea0fe24feb0" alt="Final Mockup"> </div>
 
 ### Live Demo
-- fhwe
+- 
 
 - [Deployed Link](http://localhost:3001/home) (<em>Currently Offline</em>)
 
