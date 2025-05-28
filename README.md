@@ -61,7 +61,10 @@ Application Purpose: Open Library Explorer is a React-based data visualization a
 - Mobile responsiveness still in development
 
 ### Entity-Relationship (ER) Diagram
-<img src="https://github.com/your-username/your-repo/blob/main/documentation/ER.png?raw=true">
+<div align="center">
+  <img src="https://github.com/your-username/your-repo/blob/main/documentation/ER.png?raw=true" alt="ER Diagram">
+  <p><em>Entity Relationship Diagram for the Library System</em></p>
+</div>
 This diagram represents the frontend data model derived from the Open Library API responses. Books are central entities connected to authors, genres, and publication years. The application maintains this structure in its state management.
 
 <div align="center">
