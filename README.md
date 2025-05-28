@@ -62,37 +62,15 @@ Application Purpose: Open Library Explorer is a React-based data visualization a
 
 ### Entity-Relationship (ER) Diagram
 <div align="center">
-  <img src="https://github.com/your-username/your-repo/blob/main/documentation/ER.png?raw=true" alt="ER Diagram">
+  <img src="![ER](https://github.com/user-attachments/assets/6c373d48-dd9a-4b47-89fd-0b8508bb1f54)">
   <p><em>Entity Relationship Diagram for the Library System</em></p>
 </div>
 This diagram represents the frontend data model derived from the Open Library API responses. Books are central entities connected to authors, genres, and publication years. The application maintains this structure in its state management.
 
-<div align="center">
+
 ### Use Case Diagram
+<div align="center">
 
-```mermaid
-%% Library System Use Case Diagram
-useCaseDiagram
-    actor User as "Library User"
-    
-    rectangle "Library Analytics System" {
-        (View Publishing Trends) as trend
-        (Compare Authors/Books) as compare
-        (Explore by Genre/Year) as explore
-        (Search Book Metadata) as search
-        (Toggle Chart Types) as toggle
-        (Filter Data) as filter
-
-        User --> trend
-        User --> compare
-        User --> explore
-        User --> search
-
-        trend ..> toggle : extends
-        explore ..> filter : extends
-    }
-```
-<p><em>How users interact with Open Library Explorer's visualization features</em></p>
 </div>
 #### Key Features:
 - View Book Trends: Access line charts showing publishing trends
@@ -101,7 +79,7 @@ useCaseDiagram
 - Search Books: Find specific books by title/author
 
 ### Data Flow Diagram (DFD)
-<img src="https://github.com/your-username/your-repo/blob/main/documentation/DFD.png?raw=true">
+<img src="![DFD](https://github.com/user-attachments/assets/1f0224b6-50ff-4286-91a1-b6b3bff2441d)">
 #### Data Flow Process:
 1. User interacts with UI components (filters, buttons)
 2. Application checks for cached API responses
@@ -114,29 +92,7 @@ useCaseDiagram
 <div align="center">
 
 ### Component Architecture
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#51352C'}}}%%
-componentDiagram
-    component App {
-        [React Router]
-    }
-    
-    component API_Service {
-        [Axios Instance]
-        [Data Cache]
-    }
-    
-    component Pages {
-        component HomePage
-        component ComparisonPage
-        component TimelinePage
-    }
-    
-    App --> Pages
-    Pages --> HomePage
-    HomePage --> (TrendCharts)
-    API_Service --> OpenLibraryAPI[(Open Library API)]
-```
+
 <p><em>React component structure and data flow</em></p>
 </div>
 #### Key Components:
