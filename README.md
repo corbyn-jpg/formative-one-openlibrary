@@ -11,15 +11,16 @@
 ## Table of Contents
 
 1. [About the Project](#about-the-project)
-2. [Built With](#built-with)
-3. [Getting Started](#getting-started)
-4. [Features](#features)
-5. [Concept Process](#concept-process)
-6. [Development Highlights](#development-highlights)
-7. [Final Outcome](#final-outcome)
-8. [Roadmap](#roadmap)
-9. [License](#license)
-10. [Contact](#contact)
+2. [Documentation](#documentation)
+3. [Built With](#built-with)
+4. [Getting Started](#getting-started)
+5. [Features](#features)
+6. [Concept Process](#concept-process)
+7. [Development Highlights](#development-highlights)
+8. [Final Outcome](#final-outcome)
+9. [Roadmap](#roadmap)
+10. [License](#license)
+11. [Contact](#contact)
 
 ---
 
@@ -33,6 +34,112 @@ Open Library Explorer is an interactive data visualization platform that leverag
 - **Timeline Explorer**: Popular books by genre/year
 
 ---
+
+## Documentation
+
+### Technical Description
+Application Purpose: Open Library Explorer is a React-based data visualization application that helps users explore and compare book data from the Open Library API. It provides insights into publishing trends, author comparisons, and genre popularity over time.
+
+#### Key Features
+- Interactive charts (Line, Bar) showing publishing trends
+- Book and author comparison tools
+- Timeline explorer for genre/year analysis
+- Responsive design with mobile-first approach
+
+#### API Used: Open Library API (https://openlibrary.org/developers/api)
+- Provides access to book metadata, author information, and cover images
+- Rate-limited public API with JSON responses
+
+#### Visualization Types:
+- Line charts for trend analysis over time
+- Bar charts for comparison views
+- Stacked charts for genre distribution
+
+#### Limitations:
+- API has rate limits (unauthenticated requests limited)
+- Data completeness depends on Open Library's coverage
+- Mobile responsiveness still in development
+
+### Entity-Relationship (ER) Diagram
+<img src="https://github.com/your-username/your-repo/blob/main/documentation/Entity-Relationship (ER) Diagram.png?raw=true">
+This diagram represents the frontend data model derived from the Open Library API responses. Books are central entities connected to authors, genres, and publication years. The application maintains this structure in its state management.
+
+<div align="center">
+### Use Case Diagram
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#C19A84'}}}%%
+useCaseDiagram
+    actor User as "Library User"
+    
+    rectangle System {
+        (View Publishing Trends) as trend
+        (Compare Authors/Books) as compare
+        (Explore by Genre/Year) as explore
+        (Search Book Metadata) as search
+        
+        User --> trend
+        User --> compare
+        User --> explore
+        User --> search
+        
+        trend .-> (Toggle Chart Types) : extends
+        explore .-> (Filter Data) : extends
+    }
+```
+<p><em>How users interact with Open Library Explorer's visualization features</em></p>
+</div>
+#### Key Features:
+- View Book Trends: Access line charts showing publishing trends
+- Compare Authors: Side-by-side visualization of author productivity
+- Explore by Genre: Filter books by genre and publication year
+- Search Books: Find specific books by title/author
+
+### Data Flow Diagram (DFD)
+<img src="https://github.com/your-username/your-repo/blob/main/documentation/Data Flow Diagram (DFD).png?raw=true">
+#### Data Flow Process:
+1. User interacts with UI components (filters, buttons)
+2. Application checks for cached API responses
+3. If no cache, fetches fresh data from Open Library API
+4. Transforms raw API data into chart-compatible formats
+5. Updates React state with processed data
+6. Re-renders Chart.js visualizations
+6. Displays updated charts to user
+
+<div align="center">
+
+### Component Architecture
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#51352C'}}}%%
+componentDiagram
+    component App {
+        [React Router]
+    }
+    
+    component API_Service {
+        [Axios Instance]
+        [Data Cache]
+    }
+    
+    component Pages {
+        component HomePage
+        component ComparisonPage
+        component TimelinePage
+    }
+    
+    App --> Pages
+    Pages --> HomePage
+    HomePage --> (TrendCharts)
+    API_Service --> OpenLibraryAPI[(Open Library API)]
+```
+<p><em>React component structure and data flow</em></p>
+</div>
+#### Key Components:
+- App: Root component with routing
+- Router: Handles page navigation
+- Page Components: Home, Comparison, Timeline pages
+- ChartWrapper: Shared component for all Chart.js integrations
+- Visualization Components: Specific chart types with custom configurations
 
 ## Built With
 
