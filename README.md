@@ -61,30 +61,32 @@ Application Purpose: Open Library Explorer is a React-based data visualization a
 - Mobile responsiveness still in development
 
 ### Entity-Relationship (ER) Diagram
-<img src="https://github.com/your-username/your-repo/blob/main/documentation/Entity-Relationship (ER) Diagram.png?raw=true">
+<img src="https://github.com/your-username/your-repo/blob/main/documentation/ER.png?raw=true">
 This diagram represents the frontend data model derived from the Open Library API responses. Books are central entities connected to authors, genres, and publication years. The application maintains this structure in its state management.
 
 <div align="center">
 ### Use Case Diagram
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#C19A84'}}}%%
+%% Library System Use Case Diagram
 useCaseDiagram
     actor User as "Library User"
     
-    rectangle System {
+    rectangle "Library Analytics System" {
         (View Publishing Trends) as trend
         (Compare Authors/Books) as compare
         (Explore by Genre/Year) as explore
         (Search Book Metadata) as search
-        
+        (Toggle Chart Types) as toggle
+        (Filter Data) as filter
+
         User --> trend
         User --> compare
         User --> explore
         User --> search
-        
-        trend .-> (Toggle Chart Types) : extends
-        explore .-> (Filter Data) : extends
+
+        trend ..> toggle : extends
+        explore ..> filter : extends
     }
 ```
 <p><em>How users interact with Open Library Explorer's visualization features</em></p>
@@ -96,7 +98,7 @@ useCaseDiagram
 - Search Books: Find specific books by title/author
 
 ### Data Flow Diagram (DFD)
-<img src="https://github.com/your-username/your-repo/blob/main/documentation/Data Flow Diagram (DFD).png?raw=true">
+<img src="https://github.com/your-username/your-repo/blob/main/documentation/DFD.png?raw=true">
 #### Data Flow Process:
 1. User interacts with UI components (filters, buttons)
 2. Application checks for cached API responses
