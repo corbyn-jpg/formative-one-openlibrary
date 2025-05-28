@@ -62,7 +62,7 @@ Application Purpose: Open Library Explorer is a React-based data visualization a
 
 ### Entity-Relationship (ER) Diagram
 <div align="center">
-  <img src="![ER](https://github.com/user-attachments/assets/6c373d48-dd9a-4b47-89fd-0b8508bb1f54)">
+  <img src="(https://github.com/user-attachments/assets/6c373d48-dd9a-4b47-89fd-0b8508bb1f54)">
   <p><em>Entity Relationship Diagram for the Library System</em></p>
 </div>
 This diagram represents the frontend data model derived from the Open Library API responses. Books are central entities connected to authors, genres, and publication years. The application maintains this structure in its state management.
@@ -79,7 +79,7 @@ This diagram represents the frontend data model derived from the Open Library AP
 - Search Books: Find specific books by title/author
 
 ### Data Flow Diagram (DFD)
-<img src="![DFD](https://github.com/user-attachments/assets/1f0224b6-50ff-4286-91a1-b6b3bff2441d)">
+<img src="(https://github.com/user-attachments/assets/1f0224b6-50ff-4286-91a1-b6b3bff2441d)">
 #### Data Flow Process:
 - User interacts with UI components (filters, buttons)
 - Application checks for cached API responses
@@ -95,6 +95,7 @@ This diagram represents the frontend data model derived from the Open Library AP
 
 <p><em>React component structure and data flow</em></p>
 </div>
+
 #### Key Components:
 - App: Root component with routing
 - Router: Handles page navigation
