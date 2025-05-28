@@ -81,13 +81,13 @@ This diagram represents the frontend data model derived from the Open Library AP
 ### Data Flow Diagram (DFD)
 <img src="![DFD](https://github.com/user-attachments/assets/1f0224b6-50ff-4286-91a1-b6b3bff2441d)">
 #### Data Flow Process:
-1. User interacts with UI components (filters, buttons)
-2. Application checks for cached API responses
-3. If no cache, fetches fresh data from Open Library API
-4. Transforms raw API data into chart-compatible formats
-5. Updates React state with processed data
-6. Re-renders Chart.js visualizations
-6. Displays updated charts to user
+- User interacts with UI components (filters, buttons)
+- Application checks for cached API responses
+- If no cache, fetches fresh data from Open Library API
+- Transforms raw API data into chart-compatible formats
+- Updates React state with processed data
+- Re-renders Chart.js visualizations
+- Displays updated charts to user
 
 <div align="center">
 
