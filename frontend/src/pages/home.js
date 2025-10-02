@@ -19,7 +19,7 @@ function Home() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const [carouselResponse, barChartResponse, lineChartResponse] =
+        const [carouselResponse, lineChartResponse] =
           await Promise.all([
             axios.get(
               "https://openlibrary.org/search.json?q=subject:fiction&limit=20&fields=title,cover_i"
