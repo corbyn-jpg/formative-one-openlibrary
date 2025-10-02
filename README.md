@@ -61,33 +61,16 @@ Application Purpose: Open Library Explorer is a React-based data visualization a
 - Mobile responsiveness still in development
 
 ### Entity-Relationship (ER) Diagram
-<img src="https://github.com/your-username/your-repo/blob/main/documentation/Entity-Relationship (ER) Diagram.png?raw=true">
+<div align="center">
+  <img src="(https://github.com/user-attachments/assets/6c373d48-dd9a-4b47-89fd-0b8508bb1f54)">
+  <p><em>Entity Relationship Diagram for the Library System</em></p>
+</div>
 This diagram represents the frontend data model derived from the Open Library API responses. Books are central entities connected to authors, genres, and publication years. The application maintains this structure in its state management.
 
-<div align="center">
-### Use Case Diagram
 
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#C19A84'}}}%%
-useCaseDiagram
-    actor User as "Library User"
-    
-    rectangle System {
-        (View Publishing Trends) as trend
-        (Compare Authors/Books) as compare
-        (Explore by Genre/Year) as explore
-        (Search Book Metadata) as search
-        
-        User --> trend
-        User --> compare
-        User --> explore
-        User --> search
-        
-        trend .-> (Toggle Chart Types) : extends
-        explore .-> (Filter Data) : extends
-    }
-```
-<p><em>How users interact with Open Library Explorer's visualization features</em></p>
+### Use Case Diagram
+<div align="center">
+
 </div>
 #### Key Features:
 - View Book Trends: Access line charts showing publishing trends
@@ -96,44 +79,23 @@ useCaseDiagram
 - Search Books: Find specific books by title/author
 
 ### Data Flow Diagram (DFD)
-<img src="https://github.com/your-username/your-repo/blob/main/documentation/Data Flow Diagram (DFD).png?raw=true">
+<img src="(https://github.com/user-attachments/assets/1f0224b6-50ff-4286-91a1-b6b3bff2441d)">
 #### Data Flow Process:
-1. User interacts with UI components (filters, buttons)
-2. Application checks for cached API responses
-3. If no cache, fetches fresh data from Open Library API
-4. Transforms raw API data into chart-compatible formats
-5. Updates React state with processed data
-6. Re-renders Chart.js visualizations
-6. Displays updated charts to user
+- User interacts with UI components (filters, buttons)
+- Application checks for cached API responses
+- If no cache, fetches fresh data from Open Library API
+- Transforms raw API data into chart-compatible formats
+- Updates React state with processed data
+- Re-renders Chart.js visualizations
+- Displays updated charts to user
 
 <div align="center">
 
 ### Component Architecture
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#51352C'}}}%%
-componentDiagram
-    component App {
-        [React Router]
-    }
-    
-    component API_Service {
-        [Axios Instance]
-        [Data Cache]
-    }
-    
-    component Pages {
-        component HomePage
-        component ComparisonPage
-        component TimelinePage
-    }
-    
-    App --> Pages
-    Pages --> HomePage
-    HomePage --> (TrendCharts)
-    API_Service --> OpenLibraryAPI[(Open Library API)]
-```
+
 <p><em>React component structure and data flow</em></p>
 </div>
+
 #### Key Components:
 - App: Root component with routing
 - Router: Handles page navigation
