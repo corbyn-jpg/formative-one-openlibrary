@@ -15,32 +15,26 @@ const Comparison = () => {
     datasets: [],
   });
   const [pieChartData, setPieChartData] = useState([]);
-  const [stackedBarData, setStackedBarData] = useState({ labels: [], datasets: [] });
+  const [stackedBarData, setStackedBarData] = useState({ 
+    labels: [], 
+    datasets: [] 
+  });
   const [authors, setAuthors] = useState([]);
-  const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isComparing, setIsComparing] = useState(false);
 
+  // Fetch all authors on component mount
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const [authorsResponse, booksResponse] = await Promise.all([
-          axios.get("https://openlibrary.org/search.json?q=author&limit=100"),
-          axios.get("https://openlibrary.org/search.json?q=title&limit=100"),
-        ]);
-
-        const allAuthors = [...new Set(authorsResponse.data.docs
+        const authorsResponse = await axios.get(
+          "https://openlibrary.org/search.json?q=author&limit=100"
+        );
+        const allAuthors = authorsResponse.data.docs
           .map((doc) => doc.author_name?.[0])
-          .filter((author) => author)
-        )].slice(0, 50);
-
-        const allBooks = [...new Set(booksResponse.data.docs
-          .map((doc) => doc.title)
-          .filter((title) => title)
-        )].slice(0, 50);
+          .filter((author) => author);
 
         setAuthors(allAuthors);
-        setBooks(allBooks);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -51,66 +45,58 @@ const Comparison = () => {
     fetchAllData();
   }, []);
 
+  // Helper function to get random items from an array
   const getRandomItems = (array, count) => {
     const shuffled = [...array].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
 
-  const dropdownOptions = [
-    ...getRandomItems(authors, 8),
-    ...getRandomItems(books, 8),
-  ];
+  // Use only authors for dropdown
+  const dropdownOptions = getRandomItems(authors, 8);
 
-  const fetchData = async (query, type) => {
+  // Fetch data from the Open Library API for authors only
+  const fetchData = async (author) => {
     try {
-      const url = type === "author" 
-        ? `https://openlibrary.org/search.json?author=${encodeURIComponent(query)}`
-        : `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`;
-      
+      const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(author)}`;
       const response = await axios.get(url);
-      return {
-        total: response.data.numFound || 0,
-        works: response.data.docs.slice(0, 10) || []
-      };
+      return response.data.numFound || 0;
     } catch (error) {
       console.error("Error fetching data:", error);
-      return { total: 0, works: [] };
+      return 0;
     }
   };
 
-  const fetchHistoricalData = async (query, type) => {
-    const decades = [1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020];
+  // Fetch historical data for the line chart for authors only
+  const fetchHistoricalData = async (author) => {
+    const years = [1900, 1920, 1940, 1960, 1980, 2000, 2020];
     const data = await Promise.all(
-      decades.map(async (decade) => {
+      years.map(async (year) => {
+        const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(author)}&published_in=${year}`;
         try {
-          const url = type === "author"
-            ? `https://openlibrary.org/search.json?author=${encodeURIComponent(query)}&published_in=${decade}`
-            : `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}&published_in=${decade}`;
-
           const response = await axios.get(url);
-          return { decade, count: response.data.numFound || 0 };
+          return { year, count: response.data.numFound || 0 };
         } catch (error) {
-          return { decade, count: 0 };
+          console.error("Error fetching historical data:", error);
+          return { year, count: 0 };
         }
       })
     );
 
+    // Filter out years with no data
     const filteredData = data.filter((item) => item.count > 0);
     return {
-      labels: filteredData.map((item) => item.decade),
+      labels: filteredData.map((item) => item.year),
       data: filteredData.map((item) => item.count),
     };
   };
 
-  const fetchGenreData = async (query, type) => {
-    const genres = ["fiction", "science", "history", "biography", "romance", "mystery"];
+  // Fetch genre data for authors
+  const fetchGenreData = async (author) => {
+    const genres = ["fiction", "science", "history", "biography", "romance"];
     const genreData = await Promise.all(
       genres.map(async (genre) => {
         try {
-          const url = type === "author"
-            ? `https://openlibrary.org/search.json?author=${encodeURIComponent(query)}&subject=${genre}`
-            : `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}&subject=${genre}`;
-
+          const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(author)}&subject=${genre}`;
           const response = await axios.get(url);
           return {
             label: genre.charAt(0).toUpperCase() + genre.slice(1),
@@ -129,126 +115,102 @@ const Comparison = () => {
 
   const handleSubmit = async () => {
     if (!firstSelection || !secondSelection) {
-      alert("Please select both options to compare.");
+      alert("Please select both authors to compare.");
       return;
     }
 
     setIsComparing(true);
 
-    const firstType = authors.includes(firstSelection) ? "author" : "title";
-    const secondType = authors.includes(secondSelection) ? "author" : "title";
+    try {
+      // Fetch data for both authors
+      const [firstData, secondData, firstHistoricalData, secondHistoricalData, firstGenreData, secondGenreData] = await Promise.all([
+        fetchData(firstSelection),
+        fetchData(secondSelection),
+        fetchHistoricalData(firstSelection),
+        fetchHistoricalData(secondSelection),
+        fetchGenreData(firstSelection),
+        fetchGenreData(secondSelection)
+      ]);
 
-    // Fetch all data in parallel
-    const [
-      firstData,
-      secondData,
-      firstHistoricalData,
-      secondHistoricalData,
-      firstGenreData,
-      secondGenreData
-    ] = await Promise.all([
-      fetchData(firstSelection, firstType),
-      fetchData(secondSelection, secondType),
-      fetchHistoricalData(firstSelection, firstType),
-      fetchHistoricalData(secondSelection, secondType),
-      fetchGenreData(firstSelection, firstType),
-      fetchGenreData(secondSelection, secondType)
-    ]);
+      // Bar Chart Data
+      setComparisonData([
+        { label: firstSelection, value: firstData },
+        { label: secondSelection, value: secondData },
+      ]);
 
-    // 1. Bar Chart - Total Works Comparison
-    setComparisonData([
-      { label: firstSelection, value: firstData.total },
-      { label: secondSelection, value: secondData.total },
-    ]);
+      // Line Chart Data - Combine years from both datasets
+      const allYears = [...new Set([
+        ...firstHistoricalData.labels,
+        ...secondHistoricalData.labels
+      ])].sort();
 
-    // 2. Line Chart - Historical Trends
-    const allDecades = [...new Set([
-      ...firstHistoricalData.labels,
-      ...secondHistoricalData.labels
-    ])].sort();
+      setLineChartData({
+        labels: allYears,
+        datasets: [
+          {
+            label: firstSelection,
+            data: allYears.map(year => {
+              const index = firstHistoricalData.labels.indexOf(year);
+              return index !== -1 ? firstHistoricalData.data[index] : 0;
+            }),
+            borderColor: "rgb(144, 160, 255)",
+            backgroundColor: "rgba(101, 57, 160, 0.2)",
+            fill: true,
+          },
+          {
+            label: secondSelection,
+            data: allYears.map(year => {
+              const index = secondHistoricalData.labels.indexOf(year);
+              return index !== -1 ? secondHistoricalData.data[index] : 0;
+            }),
+            borderColor: "rgb(228, 227, 145)",
+            backgroundColor: "rgba(255, 214, 102, 0.2)",
+            fill: true,
+          },
+        ],
+      });
 
-    setLineChartData({
-      labels: allDecades,
-      datasets: [
-        {
-          label: firstSelection,
-          data: allDecades.map(decade => {
-            const index = firstHistoricalData.labels.indexOf(decade);
-            return index !== -1 ? firstHistoricalData.data[index] : 0;
-          }),
-          borderColor: "rgb(144, 160, 255)",
-          backgroundColor: "rgba(101, 57, 160, 0.2)",
-          fill: false,
-          tension: 0.4,
-        },
-        {
-          label: secondSelection,
-          data: allDecades.map(decade => {
-            const index = secondHistoricalData.labels.indexOf(decade);
-            return index !== -1 ? secondHistoricalData.data[index] : 0;
-          }),
-          borderColor: "rgb(228, 227, 145)",
-          backgroundColor: "rgba(255, 214, 102, 0.2)",
-          fill: false,
-          tension: 0.4,
-        },
-      ],
-    });
+      // Pie Chart Data - First author's genre distribution
+      setPieChartData(firstGenreData);
 
-    // 3. Pie Chart - Genre Distribution for First Selection
-    setPieChartData(firstGenreData);
+      // Stacked Bar Chart Data - Genre comparison
+      const allGenres = [...new Set([
+        ...firstGenreData.map(g => g.label),
+        ...secondGenreData.map(g => g.label)
+      ])];
 
-    // 4. Stacked Bar Chart - Genre Comparison
-    const allGenres = [...new Set([
-      ...firstGenreData.map(g => g.label),
-      ...secondGenreData.map(g => g.label)
-    ])];
+      setStackedBarData({
+        labels: allGenres,
+        datasets: [
+          {
+            label: firstSelection,
+            data: allGenres.map(genre => {
+              const found = firstGenreData.find(g => g.label === genre);
+              return found ? found.value : 0;
+            }),
+            backgroundColor: "rgba(35, 79, 146, 0.8)",
+            borderColor: "rgb(144, 160, 255)",
+            borderWidth: 1,
+          },
+          {
+            label: secondSelection,
+            data: allGenres.map(genre => {
+              const found = secondGenreData.find(g => g.label === genre);
+              return found ? found.value : 0;
+            }),
+            backgroundColor: "rgba(75, 192, 137, 0.8)",
+            borderColor: "rgb(75, 192, 137)",
+            borderWidth: 1,
+          },
+        ],
+      });
 
-    setStackedBarData({
-      labels: allGenres,
-      datasets: [
-        {
-          label: firstSelection,
-          data: allGenres.map(genre => {
-            const found = firstGenreData.find(g => g.label === genre);
-            return found ? found.value : 0;
-          }),
-          backgroundColor: "rgba(144, 160, 255, 0.8)",
-          borderColor: "rgb(144, 160, 255)",
-          borderWidth: 1,
-        },
-        {
-          label: secondSelection,
-          data: allGenres.map(genre => {
-            const found = secondGenreData.find(g => g.label === genre);
-            return found ? found.value : 0;
-          }),
-          backgroundColor: "rgba(228, 227, 145, 0.8)",
-          borderColor: "rgb(228, 227, 145)",
-          borderWidth: 1,
-        },
-      ],
-    });
-
-    setIsComparing(false);
+    } catch (error) {
+      console.error("Error in comparison:", error);
+    } finally {
+      setIsComparing(false);
+    }
   };
-
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "50vh",
-          fontSize: "24px",
-          color: "white",
-        }}
-      >
-        Loading...
-      </div>
-    );
-  }
 
   return (
     <div
@@ -259,112 +221,119 @@ const Comparison = () => {
         margin: "20px",
       }}
     >
-      <h1>Compare Authors or Books</h1>
-      
-      {/* Comparison Controls */}
-      <div className="row justify-content-center w-100 mb-4">
-        <div className="col-md-4 mb-2">
-          <Dropdown
-            options={dropdownOptions}
-            onSelect={setFirstSelection}
-            placeholder="Select first option"
-          />
-        </div>
-        <div className="col-md-4 mb-2">
-          <Dropdown
-            options={dropdownOptions}
-            onSelect={setSecondSelection}
-            placeholder="Select second option"
-          />
-        </div>
-        <div className="col-md-2 mb-2 d-flex align-items-end">
-          <button
-            onClick={handleSubmit}
-            disabled={isComparing || !firstSelection || !secondSelection}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#4bc089",
-              color: "white",
-              fontFamily: "serif",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontSize: "20px",
-              width: "100%",
-            }}
-          >
-            {isComparing ? "Comparing..." : "Compare"}
-          </button>
-        </div>
-      </div>
-
-      {isComparing && (
+      <h1>Compare Authors</h1>
+      {isLoading ? (
         <div
           style={{
             display: "flex",
-            justifyContent: "center",
             alignItems: "center",
-            height: "10vh",
-            fontSize: "20px",
+            height: "5vh",
+            fontSize: "24px",
             color: "white",
           }}
         >
-          Fetching comparison data...
+          Loading...
         </div>
-      )}
-
-      {comparisonData.length > 0 && !isComparing && (
+      ) : (
         <>
-          {/* Graph 1: Bar Chart - Total Works Comparison */}
-          <div className="row w-100 mb-4">
-            <div className="col-12">
-              <div style={{ width: "100%", margin: "20px 0" }}>
-                <BarChart
-                  data={comparisonData}
-                  backgroundColor={["rgba(35, 79, 146, 0.8)", "rgba(75, 192, 137, 0.8)"]}
-                  borderColor={["rgb(144, 160, 255)", "rgb(75, 192, 137)"]}
-                  fontColor="white"
-                  chartTitle={`Number of Works: ${firstSelection} vs ${secondSelection}`}
-                />
-              </div>
-            </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: "20px",
+              color: "white",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "20px",
+              gap: "20px",
+            }}
+          >
+            <Dropdown
+              options={dropdownOptions}
+              onSelect={setFirstSelection}
+              placeholder="Select first author"
+            />
+            <Dropdown
+              options={dropdownOptions}
+              onSelect={setSecondSelection}
+              placeholder="Select second author"
+            />
+            <button
+              onClick={handleSubmit}
+              disabled={isComparing}
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "#4bc089",
+                color: "white",
+                fontFamily: "serif",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "20px",
+              }}
+            >
+              {isComparing ? "Comparing..." : "Compare"}
+            </button>
           </div>
 
-          {/* Graph 2: Line Chart - Historical Trends */}
-          <div className="row w-100 mb-4">
-            <div className="col-12">
-              <div style={{ width: "100%", margin: "20px 0" }}>
-                <LineChart
-                  data={lineChartData}
-                  borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
-                  backgroundColors={[
-                    "rgba(101, 57, 160, 0.2)",
-                    "rgba(255, 214, 102, 0.2)",
-                  ]}
-                  fontColor="white"
-                  chartTitle={`Publication Trends Over Time: ${firstSelection} vs ${secondSelection}`}
-                />
-              </div>
+          {/* Bar Chart - Total Works Comparison */}
+          {comparisonData.length > 0 && (
+            <div style={{ width: "80%", margin: "20px" }}>
+              <BarChart
+                data={comparisonData}
+                backgroundColor={["rgba(35, 79, 146, 0.8)", "rgba(75, 192, 137, 0.8)"]}
+                borderColor={["rgb(144, 160, 255)", "rgb(75, 192, 137)"]}
+                fontColor="white"
+                chartTitle={`Number of Works for ${firstSelection} vs ${secondSelection}`}
+              />
             </div>
-          </div>
+          )}
 
-          {/* Graphs 3 & 4: Pie Chart and Stacked Bar Chart */}
-          <div className="row w-100">
-            {/* Pie Chart */}
-            <div className="col-md-6 mb-4">
-              <div style={{ width: "100%", margin: "20px 0" }}>
-                <h3 style={{ textAlign: "center", color: "white", marginBottom: "20px" }}>
+          {/* Line Chart - Historical Trends */}
+          {lineChartData.labels.length > 0 && (
+            <div style={{ width: "80%", margin: "20px" }}>
+              <LineChart
+                data={lineChartData}
+                borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
+                backgroundColors={[
+                  "rgba(101, 57, 160, 0.2)",
+                  "rgba(255, 214, 102, 0.2)",
+                ]}
+                fontColor="white"
+                chartTitle={`Publication Trends: ${firstSelection} vs ${secondSelection}`}
+              />
+            </div>
+          )}
+
+          {/* Pie Chart and Stacked Bar Chart Side by Side */}
+          {(pieChartData.length > 0 || stackedBarData.labels.length > 0) && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "80%",
+                margin: "20px",
+                gap: "20px",
+              }}
+            >
+              {/* Pie Chart - First Author's Genre Distribution */}
+              <div style={{ flex: 1 }}>
+                <h3
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    marginBottom: "20px",
+                  }}
+                >
                   Genre Distribution - {firstSelection}
                 </h3>
                 {pieChartData.length > 0 ? (
-                  <div style={{ height: "400px" }}>
+                  <div style={{ height: "55vh" }}>
                     <PieChart
                       data={pieChartData}
                       backgroundColors={[
-                        "rgba(255, 99, 132, 0.8)",
-                        "rgba(54, 162, 235, 0.8)",
+                        "rgba(144, 160, 255, 0.8)",
+                        "rgba(75, 192, 137, 0.8)",
                         "rgba(255, 206, 86, 0.8)",
-                        "rgba(75, 192, 192, 0.8)",
                         "rgba(153, 102, 255, 0.8)",
                         "rgba(255, 159, 64, 0.8)",
                       ]}
@@ -380,22 +349,30 @@ const Comparison = () => {
                       borderRadius: "8px",
                       textAlign: "center",
                       color: "white",
+                      height: "55vh",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     No genre data available for {firstSelection}
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* Stacked Bar Chart */}
-            <div className="col-md-6 mb-4">
-              <div style={{ width: "100%", margin: "20px 0" }}>
-                <h3 style={{ textAlign: "center", color: "white", marginBottom: "20px" }}>
+              {/* Stacked Bar Chart - Genre Comparison */}
+              <div style={{ flex: 1 }}>
+                <h3
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    marginBottom: "20px",
+                  }}
+                >
                   Genre Comparison
                 </h3>
                 {stackedBarData.labels.length > 0 ? (
-                  <div style={{ height: "400px" }}>
+                  <div style={{ height: "55vh" }}>
                     <StackedBarChart
                       data={stackedBarData}
                       fontColor="white"
@@ -410,6 +387,10 @@ const Comparison = () => {
                       borderRadius: "8px",
                       textAlign: "center",
                       color: "white",
+                      height: "55vh",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
                     No genre comparison data available
@@ -417,64 +398,52 @@ const Comparison = () => {
                 )}
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Summary Stats */}
-          <div className="row w-100 mt-4">
-            <div className="col-12">
-              <div
-                style={{
-                  backgroundColor: "rgba(81, 53, 44, 0.8)",
-                  padding: "20px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                }}
-              >
-                <h3 style={{ color: "white", marginBottom: "20px" }}>Comparison Summary</h3>
-                <div className="row">
-                  <div className="col-md-4">
-                    <h4 style={{ color: "#4bc089" }}>{firstSelection}</h4>
-                    <p style={{ fontSize: "24px", color: "white", margin: "0" }}>
-                      {comparisonData[0]?.value.toLocaleString()} works
-                    </p>
-                  </div>
-                  <div className="col-md-4">
-                    <h4 style={{ color: "#4bc089" }}>{secondSelection}</h4>
-                    <p style={{ fontSize: "24px", color: "white", margin: "0" }}>
-                      {comparisonData[1]?.value.toLocaleString()} works
-                    </p>
-                  </div>
-                  <div className="col-md-4">
-                    <h4 style={{ color: "#4bc089" }}>Difference</h4>
-                    <p style={{ fontSize: "24px", color: "white", margin: "0" }}>
-                      {Math.abs(comparisonData[0]?.value - comparisonData[1]?.value).toLocaleString()} works
-                    </p>
-                    <small style={{ color: "#ccc" }}>
-                      {comparisonData[0]?.value > comparisonData[1]?.value 
-                        ? `${firstSelection} has more works` 
-                        : `${secondSelection} has more works`
-                      }
-                    </small>
-                  </div>
-                </div>
+          {/* Summary Metrics */}
+          {comparisonData.length > 0 && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                width: "80%",
+                margin: "20px",
+                backgroundColor: "rgba(81, 53, 44, 0.8)",
+                padding: "20px",
+                borderRadius: "8px",
+              }}
+            >
+              <div style={{ textAlign: "center", color: "white" }}>
+                <h3>{firstSelection}</h3>
+                <p style={{ fontSize: "24px", margin: "10px 0" }}>{comparisonData[0]?.value.toLocaleString()}</p>
+                <p>Total Works</p>
+              </div>
+              <div style={{ textAlign: "center", color: "white" }}>
+                <h3>{secondSelection}</h3>
+                <p style={{ fontSize: "24px", margin: "10px 0" }}>{comparisonData[1]?.value.toLocaleString()}</p>
+                <p>Total Works</p>
+              </div>
+              <div style={{ textAlign: "center", color: "white" }}>
+                <h3>Difference</h3>
+                <p style={{ fontSize: "24px", margin: "10px 0", color: "#4bc089" }}>
+                  {Math.abs(comparisonData[0]?.value - comparisonData[1]?.value).toLocaleString()}
+                </p>
+                <p>
+                  {comparisonData[0]?.value > comparisonData[1]?.value 
+                    ? `${firstSelection} leads by` 
+                    : `${secondSelection} leads by`
+                  }
+                </p>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          )}
 
-      {!isComparing && comparisonData.length === 0 && (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "40px",
-            color: "white",
-            marginTop: "40px",
-          }}
-        >
-          <h3>Select two authors or books to compare</h3>
-          <p>Choose from the dropdown menus above to see detailed comparisons</p>
-        </div>
+          {!firstSelection && !secondSelection && !isComparing && (
+            <div style={{ color: "white", textAlign: "center", marginTop: "40px" }}>
+              <p>Select two authors from the dropdown menus to compare their works and publication trends.</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

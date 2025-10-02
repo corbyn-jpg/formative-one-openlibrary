@@ -22,13 +22,13 @@ function Home() {
         const [carouselResponse, barChartResponse, lineChartResponse] =
           await Promise.all([
             axios.get(
-              "https://openlibrary.org/search.json?q=subject:fiction&limit=50&fields=title,cover_i"
+              "https://openlibrary.org/search.json?q=subject:fiction&limit=20&fields=title,cover_i"
             ),
             axios.get(
               "https://openlibrary.org/search.json?q=subject:fiction&limit=1"
             ),
             axios.get(
-              "https://openlibrary.org/search.json?q=subject:fiction&limit=20&fields=first_publish_year,edition_count"
+              "https://openlibrary.org/search.json?q=subject:fiction&limit=10&fields=first_publish_year,edition_count"
             ),
           ]);
 
@@ -39,7 +39,6 @@ function Home() {
         const randomBooks = getRandomItems(allBooks, 5);
         const carouselBooks = randomBooks.map((book) => ({
           image: `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`,
-          title: book.title,
         }));
         setCarouselData(carouselBooks);
 
@@ -53,29 +52,25 @@ function Home() {
         ];
         const genreData = await Promise.all(
           genres.map(async (genre) => {
-            try {
-              const response = await axios.get(
-                `https://openlibrary.org/search.json?subject=${genre.toLowerCase()}&limit=1`
-              );
-              return {
-                label: genre,
-                value: response.data.numFound || 0,
-              };
-            } catch (error) {
-              return { label: genre, value: 0 };
-            }
+            const response = await axios.get(
+              `https://openlibrary.org/search.json?subject=${genre.toLowerCase()}&limit=1`
+            );
+            return {
+              label: genre,
+              value: response.data.numFound || 0,
+            };
           })
         );
         setBarChartData(genreData);
 
         // Process line chart data
-        const lineChartBooks = lineChartResponse.data.docs.filter(
-          (book) => book.first_publish_year && book.edition_count
+        const lineChartBooks = lineChartResponse.data.docs;
+        const labels = lineChartBooks.map(
+          (book) => book.first_publish_year || "Unknown"
         );
-        const labels = lineChartBooks.map((book) => book.first_publish_year);
         const dataset = {
           label: "Books Published",
-          data: lineChartBooks.map((book) => book.edition_count),
+          data: lineChartBooks.map((book) => book.edition_count || 0),
           borderColor: "rgb(144, 160, 255)",
           backgroundColor: "rgba(101, 57, 160, 0.2)",
           fill: true,
@@ -97,25 +92,40 @@ function Home() {
   }, []);
 
   const getRandomItems = (array, count) => {
-    if (array.length <= count) return array;
-    const shuffled = [...array].sort(() => 0.5 - Math.random());
+    const shuffled = array.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
 
   if (isLoading) {
     return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading Library Data...</p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          fontSize: "24px",
+          color: "white",
+        }}
+      >
+        Loading...
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="error-container">
-        <p>{error}</p>
-        <button onClick={() => window.location.reload()}>Retry</button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          fontSize: "24px",
+          color: "red",
+        }}
+      >
+        {error}
       </div>
     );
   }
@@ -134,41 +144,64 @@ function Home() {
             Open Library Explorer helps users compare books, authors, and genres
             using data from the Open Library API. Easily analyze trends, view
             top books, and explore literary timelines through interactive charts
-            and visualizations.
+            and visualizations. Perfect for readers, researchers, and book
+            enthusiasts looking to dive deeper into the world of literature.
           </p>
         </div>
       </div>
 
-      <div className="charts-container">
-        <div className="chart-row">
-          <div className="chart-wrapper large">
-            <BarChart
-              data={barChartData}
-              backgroundColor="rgba(35, 79, 146, 0.8)"
-              borderColor="rgb(144, 160, 255)"
-              fontColor="white"
-              chartTitle="Number of Books by Genre"
-            />
-          </div>
-          <div className="featured-books">
-            <h2>Featured Books</h2>
-            <Carousel images={carouselData} />
-          </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "2vh 5%",
+          gap: "20px",
+        }}
+      >
+        <div style={{ flex: 2, width: "60vw" }}>
+          <BarChart
+            data={barChartData}
+            backgroundColor="rgba(35, 79, 146, 0.8)"
+            borderColor="rgb(144, 160, 255)"
+            fontColor="white"
+            chartTitle="Number of Books by Genre"
+          />
         </div>
+        <div style={{ flex: 1 }}>
+          <h2
+            style={{
+              textAlign: "center",
+              color: "white",
+              marginBottom: "20px",
+            }}
+          >
+            Featured Books
+          </h2>
+          <Carousel images={carouselData.map((book) => book.image)} />
+        </div>
+      </div>
 
-        <div className="chart-row">
-          <div className="chart-wrapper">
-            <LineChart
-              data={lineChartData}
-              borderColors={["rgb(144, 160, 255)"]}
-              backgroundColors={["rgba(101, 57, 160, 0.2)"]}
-              fontColor="white"
-              chartTitle="Book Publishing Trends"
-            />
-          </div>
-          <div className="chart-wrapper">
-            <StackedAreaChart />
-          </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          margin: "20px 5%",
+          gap: "20px",
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <LineChart
+            data={lineChartData}
+            borderColors={["rgb(144, 160, 255)"]}
+            backgroundColors={["rgba(101, 57, 160, 0.2)"]}
+            fontColor="white"
+            chartTitle="Trends in Book Publishing Over the Years"
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          <StackedAreaChart />
         </div>
       </div>
     </>

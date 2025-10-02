@@ -28,10 +28,10 @@ const LineChart = ({
           datasets: data.datasets.map((dataset, index) => ({
             label: dataset.label,
             data: dataset.data,
-            borderColor: borderColors[index],
-            backgroundColor: backgroundColors[index],
+            borderColor: borderColors ? borderColors[index] : dataset.borderColor,
+            backgroundColor: backgroundColors ? backgroundColors[index] : dataset.backgroundColor,
             borderWidth: 2,
-            fill: false,
+            fill: dataset.fill !== undefined ? dataset.fill : true,
           })),
         },
         options: {
@@ -42,7 +42,7 @@ const LineChart = ({
               display: true,
               text: chartTitle,
               font: {
-                size: 24,
+                size: 18,
                 family: "serif",
               },
               color: fontColor,
@@ -50,7 +50,7 @@ const LineChart = ({
             legend: {
               labels: {
                 font: {
-                  size: 16,
+                  size: 14,
                   family: "serif",
                 },
                 color: fontColor,
@@ -64,7 +64,7 @@ const LineChart = ({
                 display: true,
                 text: "Year",
                 font: {
-                  size: 20,
+                  size: 16,
                   family: "serif",
                 },
                 color: fontColor,
@@ -72,7 +72,7 @@ const LineChart = ({
               ticks: {
                 color: fontColor,
                 font: {
-                  size: 16,
+                  size: 14,
                   family: "serif",
                 },
               },
@@ -85,7 +85,7 @@ const LineChart = ({
                 display: true,
                 text: "Number of Books Published",
                 font: {
-                  size: 20,
+                  size: 16,
                   family: "serif",
                 },
                 color: fontColor,
@@ -93,7 +93,7 @@ const LineChart = ({
               ticks: {
                 color: fontColor,
                 font: {
-                  size: 16,
+                  size: 14,
                   family: "serif",
                 },
               },
@@ -119,10 +119,9 @@ const LineChart = ({
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
         height: "55vh",
-        marginRight: "auto",
-        marginLeft: "5%",
-        marginTop: "5%",
-        position: "relative",
+        margin: "20px 0",
+        padding: "20px",
+        borderRadius: "8px",
       }}
     >
       <canvas ref={chartRef} />

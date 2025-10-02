@@ -21,7 +21,7 @@ const PieChart = ({ data, backgroundColors, fontColor, chartTitle }) => {
             {
               data: data.map(item => item.value),
               backgroundColor: backgroundColors,
-              borderColor: "white",
+              borderColor: "rgba(81, 53, 44, 1)",
               borderWidth: 2,
             },
           ],
