@@ -15,9 +15,9 @@ const Comparison = () => {
     datasets: [],
   });
   const [pieChartData, setPieChartData] = useState([]);
-  const [stackedBarData, setStackedBarData] = useState({ 
-    labels: [], 
-    datasets: [] 
+  const [stackedBarData, setStackedBarData] = useState({
+    labels: [],
+    datasets: [],
   });
   const [authors, setAuthors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +57,9 @@ const Comparison = () => {
   // Fetch data from the Open Library API for authors only
   const fetchData = async (author) => {
     try {
-      const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(author)}`;
+      const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(
+        author
+      )}`;
       const response = await axios.get(url);
       return response.data.numFound || 0;
     } catch (error) {
@@ -71,7 +73,9 @@ const Comparison = () => {
     const years = [1900, 1920, 1940, 1960, 1980, 2000, 2020];
     const data = await Promise.all(
       years.map(async (year) => {
-        const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(author)}&published_in=${year}`;
+        const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(
+          author
+        )}&published_in=${year}`;
         try {
           const response = await axios.get(url);
           return { year, count: response.data.numFound || 0 };
@@ -96,13 +100,17 @@ const Comparison = () => {
     const genreData = await Promise.all(
       genres.map(async (genre) => {
         try {
-          const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(author)}&subject=${genre}`;
+          // Use search endpoint with author and subject parameters
+          const url = `https://openlibrary.org/search.json?author=${encodeURIComponent(
+            author
+          )}&subject=${genre}&limit=1`;
           const response = await axios.get(url);
           return {
             label: genre.charAt(0).toUpperCase() + genre.slice(1),
             value: response.data.numFound || 0,
           };
         } catch (error) {
+          console.error(`Error fetching genre data for ${author}:`, error);
           return {
             label: genre.charAt(0).toUpperCase() + genre.slice(1),
             value: 0,
@@ -110,7 +118,7 @@ const Comparison = () => {
         }
       })
     );
-    return genreData.filter(item => item.value > 0);
+    return genreData.filter((item) => item.value > 0);
   };
 
   const handleSubmit = async () => {
@@ -123,13 +131,20 @@ const Comparison = () => {
 
     try {
       // Fetch data for both authors
-      const [firstData, secondData, firstHistoricalData, secondHistoricalData, firstGenreData, secondGenreData] = await Promise.all([
+      const [
+        firstData,
+        secondData,
+        firstHistoricalData,
+        secondHistoricalData,
+        firstGenreData,
+        secondGenreData,
+      ] = await Promise.all([
         fetchData(firstSelection),
         fetchData(secondSelection),
         fetchHistoricalData(firstSelection),
         fetchHistoricalData(secondSelection),
         fetchGenreData(firstSelection),
-        fetchGenreData(secondSelection)
+        fetchGenreData(secondSelection),
       ]);
 
       // Bar Chart Data
@@ -139,17 +154,19 @@ const Comparison = () => {
       ]);
 
       // Line Chart Data - Combine years from both datasets
-      const allYears = [...new Set([
-        ...firstHistoricalData.labels,
-        ...secondHistoricalData.labels
-      ])].sort();
+      const allYears = [
+        ...new Set([
+          ...firstHistoricalData.labels,
+          ...secondHistoricalData.labels,
+        ]),
+      ].sort();
 
       setLineChartData({
         labels: allYears,
         datasets: [
           {
             label: firstSelection,
-            data: allYears.map(year => {
+            data: allYears.map((year) => {
               const index = firstHistoricalData.labels.indexOf(year);
               return index !== -1 ? firstHistoricalData.data[index] : 0;
             }),
@@ -159,7 +176,7 @@ const Comparison = () => {
           },
           {
             label: secondSelection,
-            data: allYears.map(year => {
+            data: allYears.map((year) => {
               const index = secondHistoricalData.labels.indexOf(year);
               return index !== -1 ? secondHistoricalData.data[index] : 0;
             }),
@@ -174,18 +191,20 @@ const Comparison = () => {
       setPieChartData(firstGenreData);
 
       // Stacked Bar Chart Data - Genre comparison
-      const allGenres = [...new Set([
-        ...firstGenreData.map(g => g.label),
-        ...secondGenreData.map(g => g.label)
-      ])];
+      const allGenres = [
+        ...new Set([
+          ...firstGenreData.map((g) => g.label),
+          ...secondGenreData.map((g) => g.label),
+        ]),
+      ];
 
       setStackedBarData({
         labels: allGenres,
         datasets: [
           {
             label: firstSelection,
-            data: allGenres.map(genre => {
-              const found = firstGenreData.find(g => g.label === genre);
+            data: allGenres.map((genre) => {
+              const found = firstGenreData.find((g) => g.label === genre);
               return found ? found.value : 0;
             }),
             backgroundColor: "rgba(35, 79, 146, 0.8)",
@@ -194,8 +213,8 @@ const Comparison = () => {
           },
           {
             label: secondSelection,
-            data: allGenres.map(genre => {
-              const found = secondGenreData.find(g => g.label === genre);
+            data: allGenres.map((genre) => {
+              const found = secondGenreData.find((g) => g.label === genre);
               return found ? found.value : 0;
             }),
             backgroundColor: "rgba(75, 192, 137, 0.8)",
@@ -204,7 +223,6 @@ const Comparison = () => {
           },
         ],
       });
-
     } catch (error) {
       console.error("Error in comparison:", error);
     } finally {
@@ -280,7 +298,10 @@ const Comparison = () => {
             <div style={{ width: "80%", margin: "20px" }}>
               <BarChart
                 data={comparisonData}
-                backgroundColor={["rgba(35, 79, 146, 0.8)", "rgba(75, 192, 137, 0.8)"]}
+                backgroundColor={[
+                  "rgba(35, 79, 146, 0.8)",
+                  "rgba(75, 192, 137, 0.8)",
+                ]}
                 borderColor={["rgb(144, 160, 255)", "rgb(75, 192, 137)"]}
                 fontColor="white"
                 chartTitle={`Number of Works for ${firstSelection} vs ${secondSelection}`}
@@ -415,32 +436,48 @@ const Comparison = () => {
             >
               <div style={{ textAlign: "center", color: "white" }}>
                 <h3>{firstSelection}</h3>
-                <p style={{ fontSize: "24px", margin: "10px 0" }}>{comparisonData[0]?.value.toLocaleString()}</p>
+                <p style={{ fontSize: "24px", margin: "10px 0" }}>
+                  {comparisonData[0]?.value.toLocaleString()}
+                </p>
                 <p>Total Works</p>
               </div>
               <div style={{ textAlign: "center", color: "white" }}>
                 <h3>{secondSelection}</h3>
-                <p style={{ fontSize: "24px", margin: "10px 0" }}>{comparisonData[1]?.value.toLocaleString()}</p>
+                <p style={{ fontSize: "24px", margin: "10px 0" }}>
+                  {comparisonData[1]?.value.toLocaleString()}
+                </p>
                 <p>Total Works</p>
               </div>
               <div style={{ textAlign: "center", color: "white" }}>
                 <h3>Difference</h3>
-                <p style={{ fontSize: "24px", margin: "10px 0", color: "#4bc089" }}>
-                  {Math.abs(comparisonData[0]?.value - comparisonData[1]?.value).toLocaleString()}
+                <p
+                  style={{
+                    fontSize: "24px",
+                    margin: "10px 0",
+                    color: "#4bc089",
+                  }}
+                >
+                  {Math.abs(
+                    comparisonData[0]?.value - comparisonData[1]?.value
+                  ).toLocaleString()}
                 </p>
                 <p>
-                  {comparisonData[0]?.value > comparisonData[1]?.value 
-                    ? `${firstSelection} leads by` 
-                    : `${secondSelection} leads by`
-                  }
+                  {comparisonData[0]?.value > comparisonData[1]?.value
+                    ? `${firstSelection} leads by`
+                    : `${secondSelection} leads by`}
                 </p>
               </div>
             </div>
           )}
 
           {!firstSelection && !secondSelection && !isComparing && (
-            <div style={{ color: "white", textAlign: "center", marginTop: "40px" }}>
-              <p>Select two authors from the dropdown menus to compare their works and publication trends.</p>
+            <div
+              style={{ color: "white", textAlign: "center", marginTop: "40px" }}
+            >
+              <p>
+                Select two authors from the dropdown menus to compare their
+                works and publication trends.
+              </p>
             </div>
           )}
         </>

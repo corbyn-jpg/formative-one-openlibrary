@@ -27,18 +27,12 @@ const Carousel = React.memo(({ images, title }) => {
   return (
     <div style={{ textAlign: "center" }}>
       <div style={styles.carousel}>
-        <button onClick={prevSlide} style={styles.button}>
-          &lt;
-        </button>
         <img
           src={images[currentIndex]}
           alt="slide"
           style={styles.image}
           loading="lazy" // Lazy load images
         />
-        <button onClick={nextSlide} style={styles.button}>
-          &gt;
-        </button>
       </div>
       <h1 style={styles.title}>{title}</h1>
     </div>
@@ -58,16 +52,6 @@ const styles = {
     borderRadius: "8px",
     border: "1px solid #ddd",
     objectFit: "fit",
-  },
-  button: {
-    backgroundColor: "#4bc089",
-    color: "#4f2319",
-    border: "none",
-    borderRadius: "8px",
-    padding: "10px 15px",
-    cursor: "pointer",
-    width: "50px",
-    height: "50px",
   },
   title: {
     color: "white",
