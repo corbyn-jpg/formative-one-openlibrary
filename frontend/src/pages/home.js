@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Carousel from "../components/carousel";
-import heroImage from "../Assets/Hero.jpeg";
+import heroImage from "../Assets/Hero.jpg";
 import BarChart from "../components/barchart";
 import LineChart from "../components/linechart";
 import StackedAreaChart from "../components/stackedarea";
@@ -19,7 +19,7 @@ function Home() {
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const [carouselResponse, lineChartResponse] =
+        const [carouselResponse, barChartResponse, lineChartResponse] =
           await Promise.all([
             axios.get(
               "https://openlibrary.org/search.json?q=subject:fiction&limit=20&fields=title,cover_i"
@@ -28,7 +28,7 @@ function Home() {
               "https://openlibrary.org/search.json?q=subject:fiction&limit=1"
             ),
             axios.get(
-              "https://openlibrary.org/search.json?q=subject:fiction&limit=10&fields=first_publish_year,edition_count"
+              "https://openlibrary.org/search.json?q=subject:fiction&limit=20&fields=first_publish_year,edition_count"
             ),
           ]);
 
@@ -63,22 +63,56 @@ function Home() {
         );
         setBarChartData(genreData);
 
-        // Process line chart data
-        const lineChartBooks = lineChartResponse.data.docs;
-        const labels = lineChartBooks.map(
-          (book) => book.first_publish_year || "Unknown"
-        );
-        const dataset = {
-          label: "Books Published",
-          data: lineChartBooks.map((book) => book.edition_count || 0),
-          borderColor: "rgb(144, 160, 255)",
-          backgroundColor: "rgba(101, 57, 160, 0.2)",
-          fill: true,
+        // Process line chart data with better error handling
+        const processLineChartData = (books) => {
+          // Filter and process books for line chart
+          const validBooks = books.filter(
+            (book) => book.first_publish_year && book.edition_count
+          );
+          
+          if (validBooks.length === 0) {
+            // Fallback data if no valid books from API
+            return {
+              labels: [2010, 2012, 2014, 2016, 2018, 2020, 2022],
+              datasets: [{
+                label: "Books Published",
+                data: [45, 68, 92, 115, 142, 178, 210],
+                borderColor: "rgb(144, 160, 255)",
+                backgroundColor: "rgba(101, 57, 160, 0.2)",
+                fill: true,
+                tension: 0.4,
+              }]
+            };
+          }
+
+          // Sort by year and take top 10
+          const sortedBooks = validBooks
+            .sort((a, b) => a.first_publish_year - b.first_publish_year)
+            .slice(0, 10);
+
+          const labels = sortedBooks.map(book => book.first_publish_year);
+          const data = sortedBooks.map(book => book.edition_count);
+
+          return {
+            labels,
+            datasets: [{
+              label: "Books Published",
+              data,
+              borderColor: "rgb(144, 160, 255)",
+              backgroundColor: "rgba(101, 57, 160, 0.2)",
+              fill: true,
+              tension: 0.4,
+            }]
+          };
         };
-        setLineChartData({
-          labels,
-          datasets: [dataset],
-        });
+
+        const processedLineChartData = processLineChartData(lineChartResponse.data.docs);
+        setLineChartData(processedLineChartData);
+
+        // Debug logs
+        console.log('Line Chart Data:', processedLineChartData);
+        console.log('Line Chart Labels:', processedLineChartData.labels);
+        console.log('Line Chart Datasets:', processedLineChartData.datasets);
 
         setIsLoading(false);
       } catch (error) {
@@ -135,10 +169,10 @@ function Home() {
       <div
         className="hero-image"
         style={{
-          backgroundImage: `linear-gradient(to right, #C19A84 40%, rgba(245, 230, 218, 0) 100%), url(${heroImage})`,
+          backgroundImage: `linear-gradient(to right, #bcada6 30%, rgba(245, 230, 218, 0) 100%), url(${heroImage})`,
         }}
       >
-        <div className="hero-text">
+        <div className="hero-text" style={{marginLeft: "2%"}}>
           <h1>Open Library Explorer</h1>
           <p>
             Open Library Explorer helps users compare books, authors, and genres
@@ -192,13 +226,31 @@ function Home() {
         }}
       >
         <div style={{ flex: 1 }}>
-          <LineChart
-            data={lineChartData}
-            borderColors={["rgb(144, 160, 255)"]}
-            backgroundColors={["rgba(101, 57, 160, 0.2)"]}
-            fontColor="white"
-            chartTitle="Trends in Book Publishing Over the Years"
-          />
+          {lineChartData.labels && lineChartData.labels.length > 0 ? (
+            <LineChart
+              data={lineChartData}
+              borderColors={["rgb(144, 160, 255)"]}
+              backgroundColors={["rgba(101, 57, 160, 0.2)"]}
+              fontColor="white"
+              chartTitle="Trends in Book Publishing Over the Years"
+            />
+          ) : (
+            <div
+              style={{
+                backgroundColor: "rgba(81, 53, 44, 0.8)",
+                height: "55vh",
+                padding: "20px",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+                fontSize: "18px",
+              }}
+            >
+              Loading chart data...
+            </div>
+          )}
         </div>
         <div style={{ flex: 1 }}>
           <StackedAreaChart />

@@ -14,12 +14,12 @@ const LineChart = ({
   useEffect(() => {
     const ctx = chartRef.current?.getContext("2d");
 
-    // Destroy the previous chart instance if it exists
+    // Destroy previous chart instance
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
 
-    // Only create a new chart if data is available
+    // Only create chart if data is available
     if (ctx && data && data.labels && data.datasets) {
       chartInstance.current = new Chart(ctx, {
         type: "line",
@@ -32,6 +32,7 @@ const LineChart = ({
             backgroundColor: backgroundColors ? backgroundColors[index] : dataset.backgroundColor,
             borderWidth: 2,
             fill: dataset.fill !== undefined ? dataset.fill : true,
+            tension: 0.4,
           })),
         },
         options: {
@@ -81,6 +82,7 @@ const LineChart = ({
               },
             },
             y: {
+              beginAtZero: true,
               title: {
                 display: true,
                 text: "Number of Books Published",
@@ -106,7 +108,7 @@ const LineChart = ({
       });
     }
 
-    // Cleanup function to destroy the chart when the component unmounts
+    // Cleanup
     return () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
@@ -119,7 +121,6 @@ const LineChart = ({
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
         height: "55vh",
-        margin: "20px 0",
         padding: "20px",
         borderRadius: "8px",
       }}

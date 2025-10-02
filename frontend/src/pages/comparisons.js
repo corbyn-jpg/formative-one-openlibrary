@@ -427,8 +427,8 @@ const Comparison = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-around",
-                width: "80%",
-                margin: "20px",
+                width: "78%",
+                margin: "50px",
                 backgroundColor: "rgba(81, 53, 44, 0.8)",
                 padding: "20px",
                 borderRadius: "8px",
