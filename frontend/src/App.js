@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import Home from "./pages/home";
-import Comparison from "./pages/comparison";
+import Comparison from "./pages/comparisons";
 import Timeline from "./pages/timeline";
-import SearchResults from "./pages/searchresults";
-import Graphs from "./pages/graphs";
+import SearchResults from "./components/searchresults";
 import "./App.css";
 
 function App() {
@@ -21,7 +20,6 @@ function App() {
             <Route path="/comparison" element={<Comparison />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/search" element={<SearchResults />} />
-            <Route path="/graphs" element={<Graphs />} />
           </Routes>
         </main>
         <Footer />
