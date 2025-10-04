@@ -3,35 +3,27 @@ name: Deploy React App to Azure Static Web Apps
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    name: Build and Deploy
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
+      - uses: actions/checkout@v3
+      
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install and build
+        run: |
+          npm install
+          npm run build
 
-      - name: Build React app
-        run: npm run build
-
-      - name: Deploy to Azure Static Web Apps
+      - name: Deploy to Azure
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
           app_location: "/"
           output_location: "build"
           skip_app_build: true
