@@ -8,13 +8,6 @@ const Carousel = React.memo(({ images, title }) => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
-  // Handle previous slide
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
-
   // Auto-rotate the carousel every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
