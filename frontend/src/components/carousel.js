@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 
-const Carousel = React.memo(({ images, title }) => {
+const Carousel = React.memo(({ images, title, slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Handle next slide
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  // Auto-rotate the carousel every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [currentIndex]);
+      // Move the logic directly inside useEffect
+      setCurrentIndex(current => 
+        current === slides.length - 1 ? 0 : current + 1
+      );
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   return (
     <div style={{ textAlign: "center" }}>
