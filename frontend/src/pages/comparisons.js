@@ -236,21 +236,39 @@ const Comparison = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        margin: "20px",
+        margin: "40px auto",
+        padding: "0 30px 60px 30px",
+        maxWidth: "100%",
+        minHeight: "calc(100vh - 200px)",
       }}
     >
-      <h1>Compare Authors</h1>
+      <h1 style={{ color: "white", marginBottom: "20px", fontSize: "2.5rem" }}>Compare Authors</h1>
+      <p style={{ color: "rgba(255, 255, 255, 0.8)", textAlign: "center", marginBottom: "50px", fontSize: "18px", maxWidth: "700px", lineHeight: "1.6" }}>
+        Select two authors to compare their works, publication trends, and genre distributions
+      </p>
       {isLoading ? (
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            height: "5vh",
-            fontSize: "24px",
+            justifyContent: "center",
+            minHeight: "200px",
             color: "white",
           }}
         >
-          Loading...
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              border: "4px solid rgba(255, 255, 255, 0.1)",
+              borderTop: "4px solid white",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+              marginBottom: "20px"
+            }}
+          />
+          <p style={{ fontSize: "18px" }}>Loading authors...</p>
         </div>
       ) : (
         <>
@@ -261,8 +279,9 @@ const Comparison = () => {
               color: "white",
               justifyContent: "center",
               alignItems: "center",
-              margin: "20px",
-              gap: "20px",
+              margin: "30px 0 50px 0",
+              gap: "25px",
+              flexWrap: "wrap",
             }}
           >
             <Dropdown
@@ -279,14 +298,15 @@ const Comparison = () => {
               onClick={handleSubmit}
               disabled={isComparing}
               style={{
-                padding: "10px 20px",
+                padding: "12px 30px",
                 backgroundColor: "#4bc089",
                 color: "white",
                 fontFamily: "serif",
                 border: "none",
-                borderRadius: "4px",
+                borderRadius: "8px",
                 cursor: "pointer",
                 fontSize: "20px",
+                transition: "background-color 0.2s",
               }}
             >
               {isComparing ? "Comparing..." : "Compare"}
@@ -295,7 +315,7 @@ const Comparison = () => {
 
           {/* Bar Chart - Total Works Comparison */}
           {comparisonData.length > 0 && (
-            <div style={{ width: "80%", margin: "20px" }}>
+            <div style={{ width: "100%", maxWidth: "95%", margin: "40px auto" }}>
               <BarChart
                 data={comparisonData}
                 backgroundColor={[
@@ -304,14 +324,14 @@ const Comparison = () => {
                 ]}
                 borderColor={["rgb(144, 160, 255)", "rgb(75, 192, 137)"]}
                 fontColor="white"
-                chartTitle={`Number of Works for ${firstSelection} vs ${secondSelection}`}
+                chartTitle={`Total Works Comparison: ${firstSelection} vs ${secondSelection}`}
               />
             </div>
           )}
 
           {/* Line Chart - Historical Trends */}
           {lineChartData.labels.length > 0 && (
-            <div style={{ width: "80%", margin: "20px" }}>
+            <div style={{ width: "100%", maxWidth: "95%", margin: "40px auto" }}>
               <LineChart
                 data={lineChartData}
                 borderColors={["rgb(144, 160, 255)", "rgb(228, 227, 145)"]}
@@ -320,7 +340,7 @@ const Comparison = () => {
                   "rgba(255, 214, 102, 0.2)",
                 ]}
                 fontColor="white"
-                chartTitle={`Publication Trends: ${firstSelection} vs ${secondSelection}`}
+                chartTitle={`Publication Trends Over Time`}
               />
             </div>
           )}
@@ -330,25 +350,29 @@ const Comparison = () => {
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                width: "80%",
-                margin: "20px",
-                gap: "20px",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                width: "100%",
+                maxWidth: "90%",
+                margin: "40px auto",
+                gap: "60px",
+                flexWrap: "nowrap",
               }}
             >
               {/* Pie Chart - First Author's Genre Distribution */}
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: "1 1 450px", maxWidth: "550px", minWidth: "400px", minHeight: "500px" }}>
                 <h3
                   style={{
                     textAlign: "center",
                     color: "white",
                     marginBottom: "20px",
+                    fontSize: "1.5rem",
                   }}
                 >
                   Genre Distribution - {firstSelection}
                 </h3>
                 {pieChartData.length > 0 ? (
-                  <div style={{ height: "55vh" }}>
+                  <div style={{ height: "450px", width: "100%" }}>
                     <PieChart
                       data={pieChartData}
                       backgroundColors={[
@@ -370,7 +394,7 @@ const Comparison = () => {
                       borderRadius: "8px",
                       textAlign: "center",
                       color: "white",
-                      height: "55vh",
+                      height: "450px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -382,22 +406,23 @@ const Comparison = () => {
               </div>
 
               {/* Stacked Bar Chart - Genre Comparison */}
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: "1 1 450px", maxWidth: "550px", minWidth: "400px", minHeight: "500px" }}>
                 <h3
                   style={{
                     textAlign: "center",
                     color: "white",
                     marginBottom: "20px",
+                    fontSize: "1.5rem",
                   }}
                 >
                   Genre Comparison
                 </h3>
                 {stackedBarData.labels.length > 0 ? (
-                  <div style={{ height: "55vh" }}>
+                  <div style={{ height: "450px", width: "100%" }}>
                     <StackedBarChart
                       data={stackedBarData}
                       fontColor="white"
-                      chartTitle="Works by Genre"
+                      chartTitle={`${firstSelection} vs ${secondSelection}`}
                     />
                   </div>
                 ) : (
@@ -408,7 +433,7 @@ const Comparison = () => {
                       borderRadius: "8px",
                       textAlign: "center",
                       color: "white",
-                      height: "55vh",
+                      height: "450px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -427,56 +452,71 @@ const Comparison = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-around",
-                width: "78%",
-                margin: "50px",
+                width: "100%",
+                maxWidth: "1000px",
+                margin: "60px auto",
                 backgroundColor: "rgba(81, 53, 44, 0.8)",
-                padding: "20px",
-                borderRadius: "8px",
+                padding: "40px 30px",
+                borderRadius: "12px",
+                flexWrap: "wrap",
+                gap: "30px",
               }}
             >
-              <div style={{ textAlign: "center", color: "white" }}>
-                <h3>{firstSelection}</h3>
-                <p style={{ fontSize: "24px", margin: "10px 0" }}>
+              <div style={{ textAlign: "center", color: "white", minWidth: "200px" }}>
+                <h3 style={{ margin: "0 0 10px 0" }}>{firstSelection}</h3>
+                <p style={{ fontSize: "32px", margin: "10px 0", color: "#90a0ff", fontWeight: "bold" }}>
                   {comparisonData[0]?.value.toLocaleString()}
                 </p>
-                <p>Total Works</p>
+                <p style={{ fontSize: "14px", opacity: 0.8 }}>Total Works</p>
               </div>
-              <div style={{ textAlign: "center", color: "white" }}>
-                <h3>{secondSelection}</h3>
-                <p style={{ fontSize: "24px", margin: "10px 0" }}>
-                  {comparisonData[1]?.value.toLocaleString()}
-                </p>
-                <p>Total Works</p>
-              </div>
-              <div style={{ textAlign: "center", color: "white" }}>
-                <h3>Difference</h3>
+              <div style={{ textAlign: "center", color: "white", minWidth: "200px" }}>
+                <h3 style={{ margin: "0 0 10px 0" }}>Difference</h3>
                 <p
                   style={{
-                    fontSize: "24px",
+                    fontSize: "32px",
                     margin: "10px 0",
                     color: "#4bc089",
+                    fontWeight: "bold"
                   }}
                 >
                   {Math.abs(
                     comparisonData[0]?.value - comparisonData[1]?.value
                   ).toLocaleString()}
                 </p>
-                <p>
+                <p style={{ fontSize: "14px", opacity: 0.8 }}>
                   {comparisonData[0]?.value > comparisonData[1]?.value
-                    ? `${firstSelection} leads by`
-                    : `${secondSelection} leads by`}
+                    ? `${firstSelection} leads`
+                    : `${secondSelection} leads`}
                 </p>
+              </div>
+              <div style={{ textAlign: "center", color: "white", minWidth: "200px" }}>
+                <h3 style={{ margin: "0 0 10px 0" }}>{secondSelection}</h3>
+                <p style={{ fontSize: "32px", margin: "10px 0", color: "#e4e391", fontWeight: "bold" }}>
+                  {comparisonData[1]?.value.toLocaleString()}
+                </p>
+                <p style={{ fontSize: "14px", opacity: 0.8 }}>Total Works</p>
               </div>
             </div>
           )}
 
           {!firstSelection && !secondSelection && !isComparing && (
             <div
-              style={{ color: "white", textAlign: "center", marginTop: "40px" }}
+              style={{ 
+                color: "white", 
+                textAlign: "center", 
+                marginTop: "60px",
+                backgroundColor: "rgba(81, 53, 44, 0.8)",
+                padding: "80px 50px",
+                borderRadius: "12px",
+                maxWidth: "700px",
+                margin: "60px auto"
+              }}
             >
-              <p>
-                Select two authors from the dropdown menus to compare their
-                works and publication trends.
+              <h2 style={{ marginBottom: "25px", fontSize: "2rem" }}>Compare Literary Giants</h2>
+              <p style={{ fontSize: "18px", lineHeight: "1.8" }}>
+                Select two authors from the dropdown menus above to compare their
+                works, publication trends, and genre distributions through interactive
+                visualizations.
               </p>
             </div>
           )}

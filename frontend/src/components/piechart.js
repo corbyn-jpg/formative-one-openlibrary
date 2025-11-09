@@ -12,7 +12,13 @@ const PieChart = ({ data, backgroundColors, fontColor, chartTitle }) => {
       chartInstance.current.destroy();
     }
 
-    if (ctx && data && data.length > 0) {
+    // Validate data
+    const isValidData = data && 
+                       Array.isArray(data) && 
+                       data.length > 0 &&
+                       data.every(item => item && item.label && typeof item.value === 'number');
+
+    if (ctx && isValidData) {
       chartInstance.current = new Chart(ctx, {
         type: "pie",
         data: {
@@ -62,16 +68,37 @@ const PieChart = ({ data, backgroundColors, fontColor, chartTitle }) => {
     };
   }, [data, backgroundColors, fontColor, chartTitle]);
 
+  const hasValidData = data && 
+                      Array.isArray(data) && 
+                      data.length > 0 &&
+                      data.every(item => item && item.label && typeof item.value === 'number');
+
   return (
     <div
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
         height: "100%",
+        width: "100%",
         padding: "20px",
         borderRadius: "8px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: hasValidData ? "stretch" : "center",
+        alignItems: hasValidData ? "stretch" : "center",
       }}
     >
-      <canvas ref={chartRef} />
+      {hasValidData ? (
+        <canvas ref={chartRef} style={{ flexGrow: 1, width: "100%", height: "100%" }} />
+      ) : (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <p style={{ fontSize: "18px", marginBottom: "10px" }}>
+            📊 Chart data unavailable
+          </p>
+          <p style={{ fontSize: "14px", opacity: 0.7 }}>
+            {chartTitle || "Loading chart data..."}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

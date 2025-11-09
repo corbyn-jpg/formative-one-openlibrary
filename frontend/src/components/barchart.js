@@ -12,11 +12,26 @@ const BarChart = ({
   const chartInstance = useRef(null);
 
   useEffect(() => {
-    const ctx = chartRef.current.getContext("2d");
+    const ctx = chartRef.current?.getContext("2d");
 
     // Destroy the previous chart instance if it exists
     if (chartInstance.current) {
       chartInstance.current.destroy();
+    }
+
+    // Validate data before creating chart
+    const isValidData = data && 
+                       Array.isArray(data) && 
+                       data.length > 0 &&
+                       data.every(item => 
+                         item && 
+                         typeof item.label === 'string' && 
+                         typeof item.value === 'number'
+                       );
+
+    // Only create chart if data is valid and context is available
+    if (!ctx || !isValidData) {
+      return;
     }
 
     // Create a new Chart.js instance
@@ -113,18 +128,42 @@ const BarChart = ({
     };
   }, [data, backgroundColor, borderColor, fontColor, chartTitle]);
 
+  // Check if we have valid data to render
+  const hasValidData = data && 
+                      Array.isArray(data) && 
+                      data.length > 0 &&
+                      data.every(item => 
+                        item && 
+                        typeof item.label === 'string' && 
+                        typeof item.value === 'number'
+                      );
+
   return (
     <div
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
-        height: "55vh",
-        width: "auto",
-        margin: "20px",
-        padding: "10px",
+        height: "450px",
+        width: "100%",
+        padding: "25px",
         borderRadius: "8px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: hasValidData ? "stretch" : "center",
+        alignItems: hasValidData ? "stretch" : "center",
       }}
     >
-      <canvas ref={chartRef} />
+      {hasValidData ? (
+        <canvas ref={chartRef} style={{ flexGrow: 1, width: "100%", height: "100%" }} />
+      ) : (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <p style={{ fontSize: "18px", marginBottom: "10px" }}>
+            📊 Chart data unavailable
+          </p>
+          <p style={{ fontSize: "14px", opacity: 0.7 }}>
+            {chartTitle || "Loading chart data..."}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

@@ -205,14 +205,16 @@ const StackedAreaChart = () => {
       <div
         style={{
           backgroundColor: "rgba(81, 53, 44, 0.8)",
-          height: "60vh",
-          width: "45vw",
+          height: "55vh",
+          width: "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           color: "white",
           fontSize: "20px",
           borderRadius: "8px",
+          padding: "20px",
+          boxSizing: "border-box",
         }}
       >
       </div>
@@ -223,13 +225,15 @@ const StackedAreaChart = () => {
     <div
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
-        height: "60vh",
-        width: "45vw",
+        height: "55vh",
+        width: "100%",
         position: "relative",
         borderRadius: "8px",
+        padding: "20px",
+        boxSizing: "border-box",
       }}
     >
-      <canvas ref={chartRef} />
+      <canvas ref={chartRef} style={{ width: "100%", height: "100%" }} />
     </div>
   );
 };

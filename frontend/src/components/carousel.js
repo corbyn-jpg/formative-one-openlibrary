@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from "react";
 
-const Carousel = React.memo(({ images, title, slides }) => {
+const Carousel = React.memo(({ images, title }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    // Only set up interval if images exist and have content
+    if (!images || images.length === 0) return;
+    
     const interval = setInterval(() => {
       // Move the logic directly inside useEffect
       setCurrentIndex(current => 
-        current === slides.length - 1 ? 0 : current + 1
+        current === images.length - 1 ? 0 : current + 1
       );
     }, 3000);
     
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, [images]);
+
+  // Don't render if no images are provided
+  if (!images || images.length === 0) {
+    return null;
+  }
 
   return (
     <div style={{ textAlign: "center" }}>

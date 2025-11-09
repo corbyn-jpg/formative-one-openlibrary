@@ -12,7 +12,16 @@ const StackedBarChart = ({ data, fontColor, chartTitle }) => {
       chartInstance.current.destroy();
     }
 
-    if (ctx && data && data.labels && data.datasets) {
+    // Validate data
+    const isValidData = data && 
+                       data.labels && 
+                       Array.isArray(data.labels) && 
+                       data.labels.length > 0 &&
+                       data.datasets && 
+                       Array.isArray(data.datasets) && 
+                       data.datasets.length > 0;
+
+    if (ctx && isValidData) {
       chartInstance.current = new Chart(ctx, {
         type: "bar",
         data: {
@@ -105,16 +114,40 @@ const StackedBarChart = ({ data, fontColor, chartTitle }) => {
     };
   }, [data, fontColor, chartTitle]);
 
+  const hasValidData = data && 
+                      data.labels && 
+                      Array.isArray(data.labels) && 
+                      data.labels.length > 0 &&
+                      data.datasets && 
+                      Array.isArray(data.datasets) && 
+                      data.datasets.length > 0;
+
   return (
     <div
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
         height: "100%",
+        width: "100%",
         padding: "20px",
         borderRadius: "8px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: hasValidData ? "stretch" : "center",
+        alignItems: hasValidData ? "stretch" : "center",
       }}
     >
-      <canvas ref={chartRef} />
+      {hasValidData ? (
+        <canvas ref={chartRef} style={{ flexGrow: 1, width: "100%", height: "100%" }} />
+      ) : (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <p style={{ fontSize: "18px", marginBottom: "10px" }}>
+            📊 Chart data unavailable
+          </p>
+          <p style={{ fontSize: "14px", opacity: 0.7 }}>
+            {chartTitle || "Loading chart data..."}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

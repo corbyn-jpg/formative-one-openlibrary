@@ -164,3 +164,84 @@ h1{
     margin-bottom: 1.5rem;
   }
 }
+
+/* Loading animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 25%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.1) 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+/* Responsive chart containers */
+.chart-container {
+  position: relative;
+  height: 55vh;
+  min-height: 400px;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    height: 50vh;
+    min-height: 300px;
+  }
+  
+  .hero-image {
+    background-position: center center;
+    min-height: 40vh;
+  }
+  
+  .hero-text {
+    width: 85%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .links > a {
+    font-size: 1rem;
+    padding: 0.5em;
+  }
+
+  .footer-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-text {
+    width: 95%;
+    font-size: 0.85rem;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .chart-container {
+    height: 40vh;
+    min-height: 200px;
+  }
+}

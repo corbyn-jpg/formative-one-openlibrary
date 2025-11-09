@@ -19,8 +19,22 @@ const LineChart = ({
       chartInstance.current.destroy();
     }
 
-    // Only create chart if data is available
-    if (ctx && data && data.labels && data.datasets) {
+    // Validate data before creating chart
+    const isValidData = data && 
+                       data.labels && 
+                       Array.isArray(data.labels) && 
+                       data.labels.length > 0 &&
+                       data.datasets && 
+                       Array.isArray(data.datasets) && 
+                       data.datasets.length > 0 &&
+                       data.datasets.every(dataset => 
+                         dataset.data && 
+                         Array.isArray(dataset.data) && 
+                         dataset.data.length === data.labels.length
+                       );
+
+    // Only create chart if data is valid and context is available
+    if (ctx && isValidData) {
       chartInstance.current = new Chart(ctx, {
         type: "line",
         data: {
@@ -116,16 +130,41 @@ const LineChart = ({
     };
   }, [data, borderColors, backgroundColors, fontColor, chartTitle]);
 
+  // Check if we have valid data to render
+  const hasValidData = data && 
+                      data.labels && 
+                      Array.isArray(data.labels) && 
+                      data.labels.length > 0 &&
+                      data.datasets && 
+                      Array.isArray(data.datasets) && 
+                      data.datasets.length > 0;
+
   return (
     <div
       style={{
         backgroundColor: "rgba(81, 53, 44, 0.8)",
-        height: "55vh",
-        padding: "20px",
+        height: "450px",
+        width: "100%",
+        padding: "25px",
         borderRadius: "8px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: hasValidData ? "stretch" : "center",
+        alignItems: hasValidData ? "stretch" : "center",
       }}
     >
-      <canvas ref={chartRef} />
+      {hasValidData ? (
+        <canvas ref={chartRef} style={{ flexGrow: 1, width: "100%", height: "100%" }} />
+      ) : (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <p style={{ fontSize: "18px", marginBottom: "10px" }}>
+            📊 Chart data unavailable
+          </p>
+          <p style={{ fontSize: "14px", opacity: 0.7 }}>
+            {chartTitle || "Loading chart data..."}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

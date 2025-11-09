@@ -27,6 +27,16 @@ const Dropdown = ({ options = [], onSelect, placeholder }) => {
                 ...(selectedOption === option ? styles.dropdownItemHover : {}),
               }}
               onClick={() => handleOptionClick(option)}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#4bc089";
+                e.target.style.color = "#fff";
+              }}
+              onMouseLeave={(e) => {
+                if (selectedOption !== option) {
+                  e.target.style.backgroundColor = "transparent";
+                  e.target.style.color = "#2a1810";
+                }
+              }}
             >
               {option}
             </li>
@@ -45,38 +55,47 @@ const styles = {
   },
   dropdownToggle: {
     backgroundColor: "#4f2319",
-    width: "25vw",
+    minWidth: "280px",
+    maxWidth: "400px",
     color: "#fff",
     textAlign: "center",
-    padding: "10px 20px",
-    border: "none",
+    padding: "12px 24px",
+    border: "2px solid rgba(255, 255, 255, 0.1)",
     cursor: "pointer",
-    borderRadius: "4px",
-    fontSize: "20px",
+    borderRadius: "8px",
+    fontSize: "18px",
     fontFamily: "serif",
+    transition: "all 0.3s ease",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
   },
   dropdownMenu: {
     position: "absolute",
-    top: "100%",
+    top: "calc(100% + 8px)",
     left: "0",
-    backgroundColor: "#C19A84",
-    width: "15vw",
-    minWidth: "160px",
-    fontSize: "20px",
-    boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
-    zIndex: "1",
+    right: "0",
+    backgroundColor: "rgba(193, 154, 132, 0.95)",
+    backdropFilter: "blur(10px)",
+    fontSize: "16px",
+    boxShadow: "0px 8px 24px rgba(0,0,0,0.3)",
+    zIndex: "1000",
     listStyleType: "none",
-    padding: "0",
+    padding: "8px 0",
     margin: "0",
-    borderRadius: "4px",
+    borderRadius: "8px",
+    maxHeight: "300px",
+    overflowY: "auto",
+    border: "2px solid rgba(255, 255, 255, 0.2)",
   },
   dropdownItem: {
-    padding: "12px 16px",
+    padding: "12px 20px",
     cursor: "pointer",
-    color: "#000",
+    color: "#2a1810",
+    transition: "background-color 0.2s ease",
+    fontFamily: "serif",
   },
   dropdownItemHover: {
     backgroundColor: "#4bc089",
+    color: "#fff",
   },
 };
 
