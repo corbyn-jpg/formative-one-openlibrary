@@ -99,39 +99,7 @@ src/
 ### Interactive Data Dashboards
 - **Trend Analysis:** Line charts showing publishing trends over decades
 - **Genre Distribution:** Stacked bar charts visualizing category popularity
-- **Author Productivity:** Comparative timelines of writing careers
-- **Real-time Updates:** Dynamic chart refreshes with new data
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/4c111c7a-04fe-4c9b-95f0-585f5119b66e" alt="Home Page">
-  <p><em>Interactive charts (bar/line) and a book carousel</em></p>
-</div>
-
-### Comparison Tools
-- **Side-by-Side Analysis:** Direct comparison of two authors or book series
-- **Multi-metric Evaluation:** Publication count, timeline span, genre diversity
-- **Visual Contrast:** Color-coded charts for clear differentiation
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/87167a99-0550-4125-9ddd-7d901abd2d05" alt="Comparison Page">
-  <p><em>Compare authors/books with dynamic visualizations</em></p>
-</div>
-
-### Timeline Exploration
-- **Decade Filtering:** Explore popular books and authors by time period
-- **Genre Evolution:** Track how literary categories change over time
-- **Historical Context:** View publishing trends against historical events
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/da13584d-6fd8-4e01-a5e1-43fd4bf4811d" alt="Timeline Page">
-  <p><em>Filter books by genre/author and find their best books</em></p>
-</div>
-
-### User Experience
-- **Responsive Design:** Optimized for desktop and tablet viewing
-- **Intuitive Navigation:** Clear information architecture and user flows
-- **Loading States:** Graceful handling of API delays with skeleton screens
-- **Error Handling:** User-friendly messages for failed requests
+- **Author Productivity:** Comparative timelines author's careers
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/f40f428b-b8dd-408b-9277-1d5398e65df3" alt="Interactive Dashboard">
@@ -147,6 +115,12 @@ src/
   <img src="https://github.com/user-attachments/assets/8e36ce0e-a6e4-4412-82fd-578fd91d08ce" alt="Timeline Filtering">
   <p><em>Genre and timeline filtering with historical context</em></p>
 </div>
+
+### User Experience
+- **Responsive Design:** Optimized for desktop and tablet viewing
+- **Intuitive Navigation:** Clear information architecture and user flows
+- **Loading States:** Graceful handling of API delays with skeleton screens
+- **Error Handling:** User-friendly messages for failed requests
 
 ## Development Process
 
