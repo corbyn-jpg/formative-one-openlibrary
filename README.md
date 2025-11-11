@@ -136,15 +136,16 @@ npm start
 
 ## Features
 ### Home Page
-<div align="center"> <img src="https://github.com/user-attachments/assets/4c111c7a-04fe-4c9b-95f0-585f5119b66e" alt="Home Page"> 
+<div align="center"> <img width="1887" height="768" alt="Screenshot 2025-11-09 173946" src="https://github.com/user-attachments/assets/f40f428b-b8dd-408b-9277-1d5398e65df3" />
+
    <p><em>Interactive charts (bar/line) and a book carousel</em></p> </div>
 
 ### Comparison Page
-<div align="center"> <img src="https://github.com/user-attachments/assets/87167a99-0550-4125-9ddd-7d901abd2d05" alt="Comparison Page"> 
+<div align="center"> <img width="1779" height="888" alt="Screenshot 2025-11-09 182048" src="https://github.com/user-attachments/assets/703819be-c4bd-44b7-8c67-925392480079" />
    <p><em>Compare authors/books with dynamic visualizations</em></p> </div>
 
 ### Timeline Page
-<div align="center"> <img src="https://github.com/user-attachments/assets/da13584d-6fd8-4e01-a5e1-43fd4bf4811d" alt="Timeline Page"> 
+<div align="center"> <img width="1259" height="879" alt="Screenshot 2025-11-09 182123" src="https://github.com/user-attachments/assets/8e36ce0e-a6e4-4412-82fd-578fd91d08ce" />
    <p><em>Filter books by genre/author and find their best books</em></p> </div>
    
 ## Concept Process
