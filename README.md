@@ -26,7 +26,9 @@ The application was built to demonstrate mastery of API consumption, data transf
 
 **In 150 words or less:** Open Library Explorer is an interactive data visualization platform that makes complex literary data accessible through engaging charts and comparisons. By leveraging the Open Library API, it transforms raw information about books, authors, and publishing trends into intuitive visual narratives. Users can explore author productivity through timeline charts, compare writing careers side-by-side, and discover genre popularity across decades. The platform addresses the gap between vast digital libraries and user-friendly data exploration, serving readers, researchers, and students alike. Built with React and Chart.js, it demonstrates sophisticated API integration and real-time data processing while maintaining an elegant, library-inspired aesthetic that prioritizes usability and visual clarity.
 
-https://github.com/user-attachments/assets/d5f5734c-cc27-425b-acad-cf0545f24fb2
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/d5f5734c-cc27-425b-acad-cf0545f24fb2" alt="Open Library Explorer">
+</div>
 
 ## Built With
 
@@ -100,15 +102,30 @@ src/
 - **Author Productivity:** Comparative timelines of writing careers
 - **Real-time Updates:** Dynamic chart refreshes with new data
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/4c111c7a-04fe-4c9b-95f0-585f5119b66e" alt="Home Page">
+  <p><em>Interactive charts (bar/line) and a book carousel</em></p>
+</div>
+
 ### Comparison Tools
 - **Side-by-Side Analysis:** Direct comparison of two authors or book series
 - **Multi-metric Evaluation:** Publication count, timeline span, genre diversity
 - **Visual Contrast:** Color-coded charts for clear differentiation
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/87167a99-0550-4125-9ddd-7d901abd2d05" alt="Comparison Page">
+  <p><em>Compare authors/books with dynamic visualizations</em></p>
+</div>
+
 ### Timeline Exploration
 - **Decade Filtering:** Explore popular books and authors by time period
 - **Genre Evolution:** Track how literary categories change over time
 - **Historical Context:** View publishing trends against historical events
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/da13584d-6fd8-4e01-a5e1-43fd4bf4811d" alt="Timeline Page">
+  <p><em>Filter books by genre/author and find their best books</em></p>
+</div>
 
 ### User Experience
 - **Responsive Design:** Optimized for desktop and tablet viewing
@@ -116,14 +133,20 @@ src/
 - **Loading States:** Graceful handling of API delays with skeleton screens
 - **Error Handling:** User-friendly messages for failed requests
 
-https://github.com/user-attachments/assets/f40f428b-b8dd-408b-9277-1d5398e65df3  
-*Interactive dashboard with multiple chart types and book carousel*
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/f40f428b-b8dd-408b-9277-1d5398e65df3" alt="Interactive Dashboard">
+  <p><em>Interactive dashboard with multiple chart types and book carousel</em></p>
+</div>
 
-https://github.com/user-attachments/assets/703819be-c4bd-44b7-8c67-925392480079  
-*Author comparison with side-by-side visualization*
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/703819be-c4bd-44b7-8c67-925392480079" alt="Author Comparison">
+  <p><em>Author comparison with side-by-side visualization</em></p>
+</div>
 
-https://github.com/user-attachments/assets/8e36ce0e-a6e4-4412-82fd-578fd91d08ce  
-*Genre and timeline filtering with historical context*
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/8e36ce0e-a6e4-4412-82fd-578fd91d08ce" alt="Timeline Filtering">
+  <p><em>Genre and timeline filtering with historical context</em></p>
+</div>
 
 ## Development Process
 
@@ -193,6 +216,13 @@ class OpenLibraryService {
 - **Secondary:** Fresh green (#4BC089) for data highlights
 - **Neutral:** Clean white (#FFFFFF) for background and contrast
 
+| Color             | Hex                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+| Primary Colour 1 | ![#Primary1](https://github.com/user-attachments/assets/80d6131f-42e8-424f-8f82-f733decb1b45) #C19A84 |
+| Primary Colour 2 | ![Primary2](https://github.com/user-attachments/assets/d4c413d8-b04e-41b6-beb8-02ce304ea4b3) #51352C |
+| Secondary Colour | ![Secondary](https://github.com/user-attachments/assets/f9fb6174-6d8d-4948-9446-658e9526c6fe) #4BC089 | 
+| Accent Colour | ![Accent](https://github.com/user-attachments/assets/f406d3b3-249b-4f88-aaad-6e13c9acb027) #FFFFFF |
+
 **Typography:**
 - Serif fonts (Georgia, Times New Roman) for literary authenticity
 - Clear hierarchy with consistent heading scales
@@ -203,10 +233,20 @@ class OpenLibraryService {
 - Mobile-first responsive design approach
 - User testing for chart readability and navigation clarity
 
-https://github.com/user-attachments/assets/7564b90e-9bd5-40da-a007-469b341afedf  
-*Initial wireframes showing layout planning and component structure*
+<div align="center">
+  <p><em>Initial wireframes showing layout planning and component structure</em></p>
+  <img src="https://github.com/user-attachments/assets/7564b90e-9bd5-40da-a007-469b341afedf" alt="Home Wireframe">
+  <img src="https://github.com/user-attachments/assets/ad49d183-881f-4274-bdea-87f05701703c" alt="Comparison Wireframe">
+  <img src="https://github.com/user-attachments/assets/105fafb1-9e6a-4fe9-9480-6ff66dd72a48" alt="Timeline Wireframe">
+</div>
 
 ## Final Outcome
+
+### Mockup
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/bafe3a76-7540-423b-b4a9-9ea0fe24feb0" alt="Final Mockup">
+  <p><em>Final application mockup showcasing the complete design</em></p>
+</div>
 
 ### Live Demonstration
 **View Demo Video** - 6-minute walkthrough of key features including trend analysis, author comparisons, and timeline exploration
@@ -234,6 +274,11 @@ https://github.com/user-attachments/assets/7564b90e-9bd5-40da-a007-469b341afedf
 ### Technical Challenges & Solutions
 
 **API Rate Limits:** Implemented a sophisticated caching system that stores frequent queries and shows intelligent loading states during data fetching
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/0132f3c2-5708-4a5f-a946-ccc57f98c0f5" alt="Loading Screen">
+  <p><em>Loading screen implemented for smooth user experience</em></p>
+</div>
 
 **Data Normalization:** Developed custom parsers to handle inconsistent API responses and transform them into chart-ready formats
 
